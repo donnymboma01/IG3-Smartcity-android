@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">IG3-Smartcity-android</string>
+    <string name="username">pseudo</string>
+    <string name="password">mot de passe</string>
+    <string name="login">login</string>
+    <string name="connexion">connexion</string>
+    <string name="Inscription">Inscription</string>
+    <string name="prénom">prénom</string>
+    <string name="nom">nom</string>
+    <string name="pseudo">pseudo</string>
+    <string name="motdepasse">mot de passe</string>
+    <string name="province">province</string>
+    <string name="ville">ville</string>
+    <string name="adresse">adresse</string>
+    <string name="telephone">téléphone</string>
+    <string name="inscription">s\'inscrire</string>
+    <string name="registrate">Pas encore inscrit ?, crée un compte</string>
+</resources>
