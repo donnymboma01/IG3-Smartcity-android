@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IG3-Smartcity-android</string>
+    <string name="app_name">Donation app</string>
     <string name="username">pseudo</string>
     <string name="password">mot de passe</string>
     <string name="login">login</string>
@@ -15,4 +15,7 @@
     <string name="telephone">téléphone</string>
     <string name="inscription">s\'inscrire</string>
     <string name="registrate">Pas encore inscrit ?, crée un compte</string>
+    <string name="username_empty_message">le pseudo est obligatoire !</string>
+    <string name="password_empty_message">le mot de passe est obligatoire !</string>
+    <string name="register_page_message">page d'inscription</string>
 </resources>
