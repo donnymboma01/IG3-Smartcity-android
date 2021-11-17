@@ -1,17 +1,40 @@
 package com.example.ig3_smartcity_android.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
 
+    @PrimaryKey(autoGenerate = true)
     private Integer id;
+
+    @ColumnInfo(name = "firstname")
     private String firstname;
+
+    @ColumnInfo(name = "lastname")
     private String lastname;
+
+    @ColumnInfo(name = "phone_number")
     private String phone_number;
+
+    @ColumnInfo(name = "username")
     private String username;
+
+    @ColumnInfo(name = "password")
     private String password;
+
+    @ColumnInfo(name = "province")
     private String province;
+
+    @ColumnInfo(name = "city")
     private String city;
+
+    @ColumnInfo(name = "street_number")
     private String street_and_number;
 
+    public User(){}
 
     public User(Integer id,String firstname,String lastname,String phone_number,String username,String password,String province,String city,String street_and_number){
         this.city = city;

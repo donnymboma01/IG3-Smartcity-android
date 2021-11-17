@@ -1,4 +1,19 @@
 package com.example.ig3_smartcity_android.model;
 
+import com.example.ig3_smartcity_android.R;
+
 public enum NetworkError {
+    NO_CONNECTION_ERROR(R.string.connection_error),
+    REQUEST_ERROR(R.string.request_error),
+    TECHNICAL_ERROR(R.string.technical_error);
+
+    private int errorMessage;
+
+    NetworkError(int errorMessage){
+        this.errorMessage = errorMessage;
+    }
+
+    public int getErrorMessage(){
+        return this.errorMessage;
+    }
 }

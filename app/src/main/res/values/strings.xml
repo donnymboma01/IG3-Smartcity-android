@@ -1,4 +1,6 @@
 <resources>
+
+    //---user login and registration.
     <string name="app_name">Donation app</string>
     <string name="username">pseudo</string>
     <string name="password">mot de passe</string>
@@ -15,7 +17,14 @@
     <string name="telephone">téléphone</string>
     <string name="inscription">s\'inscrire</string>
     <string name="registrate">Pas encore inscrit ?, crée un compte</string>
+
+    //---Errors messages for login and registration.
     <string name="username_empty_message">le pseudo est obligatoire !</string>
     <string name="password_empty_message">le mot de passe est obligatoire !</string>
-    <string name="register_page_message">page d'inscription</string>
+    <string name="register_page_message">inscription</string>
+
+    //---Network and connection errors
+    <string name="connection_error">Pas de connexion internet</string>
+    <string name="request_error">Une erreur s\'est produite pendant la requete</string>
+    <string name="technical_error">Il y a une erreur technique</string>
 </resources>

@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.ig3_smartcity_android.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
         switchToSecondActivity = findViewById(R.id.signupID);
+
 
         switchToSecondActivity.setOnClickListener(new View.OnClickListener() {
             @Override
