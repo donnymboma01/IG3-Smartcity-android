@@ -1,7 +1,6 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -27,12 +26,18 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
         switchToSecondActivity = findViewById(R.id.signupID);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LoginActivity.this,getResources().getText(R.string.connection_message),Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         switchToSecondActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(LoginActivity.this,getResources().getText(R.string.register_page_message),Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(LoginActivity.this,"vous etes connecté !",Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP|Gravity.CENTER,20,30);
                 toast.show();
                 goToRegisterActivity();
@@ -51,6 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
     public void goToRegisterActivity(){
         Intent switchToRegister = new Intent(this,RegistrationActivity.class);
         startActivity(switchToRegister);

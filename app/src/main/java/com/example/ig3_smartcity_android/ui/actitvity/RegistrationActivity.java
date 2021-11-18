@@ -2,7 +2,9 @@ package com.example.ig3_smartcity_android.ui.actitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,7 +20,7 @@ public class RegistrationActivity extends AppCompatActivity {
             provinceEditText,
             cityEditText,
             addressEditText;
-    Button buttonRegister;
+    Button buttonRegister, switchBackToLogin;
 
     private ProgressBar progressBar;
 
@@ -36,6 +38,19 @@ public class RegistrationActivity extends AppCompatActivity {
         addressEditText = findViewById(R.id.adresse);
 
         buttonRegister = findViewById(R.id.registrationBtnID);
+        switchBackToLogin = findViewById(R.id.backToLoginID);
 
+        switchBackToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackToLogin();
+            }
+        });
+
+    }
+
+    public void goBackToLogin(){
+        Intent backLogin = new Intent(this,LoginActivity.class);
+        startActivity(backLogin);
     }
 }

@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinsmedium"
-            android:drawableRight="@drawable/ic_username"
+            android:drawableLeft="@drawable/ic_username"
             android:id="@+id/username"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/poppinsmedium"
-            android:drawableRight="@drawable/ic_password"
+            android:drawableLeft="@drawable/ic_password"
             android:id="@+id/password">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
