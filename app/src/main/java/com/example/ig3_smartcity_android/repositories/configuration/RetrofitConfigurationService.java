@@ -1,6 +1,8 @@
 package com.example.ig3_smartcity_android.repositories.configuration;
 
 import android.content.Context;
+
+import com.example.ig3_smartcity_android.repositories.webservice.WebServives;
 import com.example.ig3_smartcity_android.utils.ConnectivityCheckInterceptor;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
@@ -10,9 +12,12 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitConfigurationService {
 
-    private static final String BASE_URL ="http://localhost:3001/v1/";  //--> est-ce bien comme ca pour l'API ?
+    private static final String BASE_URL ="http://localhost:3001/";
 
     private Retrofit retrofitClient;
+
+    private static WebServives webServives = null;
+    //private static WebServices webServices = null; --> this one was written in Java
 
     private RetrofitConfigurationService(Context context){
         inittializeRetrofit(context);
@@ -35,5 +40,12 @@ public class RetrofitConfigurationService {
 
     public static RetrofitConfigurationService getInstance(Context context){
         return new RetrofitConfigurationService(context);
+    }
+
+    public WebServives webServives(){
+        if(webServives == null){
+            webServives = retrofitClient.create((WebServives.class));
+        }
+        return webServives;
     }
 }

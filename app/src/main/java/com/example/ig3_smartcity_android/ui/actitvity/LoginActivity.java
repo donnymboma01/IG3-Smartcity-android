@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         switchToSecondActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(LoginActivity.this,"vous etes connecté !",Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(LoginActivity.this,getResources().getText(R.string.register_page_message),Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP|Gravity.CENTER,20,30);
                 toast.show();
                 goToRegisterActivity();
