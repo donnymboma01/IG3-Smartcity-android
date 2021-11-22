@@ -2,6 +2,7 @@ package com.example.ig3_smartcity_android.repositories.configuration;
 
 import android.content.Context;
 
+import com.example.ig3_smartcity_android.repositories.webservice.ApiWebServices;
 import com.example.ig3_smartcity_android.repositories.webservice.WebServives;
 import com.example.ig3_smartcity_android.utils.ConnectivityCheckInterceptor;
 import com.squareup.moshi.Moshi;
@@ -17,6 +18,7 @@ public class RetrofitConfigurationService {
     private Retrofit retrofitClient;
 
     private static WebServives webServives = null;
+    private static ApiWebServices apiWebServices = null;
     //private static WebServices webServices = null; --> this one was written in Java
 
     private RetrofitConfigurationService(Context context){
@@ -42,10 +44,17 @@ public class RetrofitConfigurationService {
         return new RetrofitConfigurationService(context);
     }
 
-    public WebServives webServives(){
+    /*public WebServives webServives(){
         if(webServives == null){
             webServives = retrofitClient.create((WebServives.class));
         }
         return webServives;
+    }*/
+
+    public ApiWebServices apiWebServices(){
+        if(apiWebServices == null){
+            apiWebServices = retrofitClient.create((ApiWebServices.class));
+        }
+        return  apiWebServices;
     }
 }
