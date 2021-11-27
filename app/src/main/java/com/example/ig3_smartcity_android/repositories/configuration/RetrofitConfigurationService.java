@@ -19,7 +19,7 @@ public class RetrofitConfigurationService {
 
     private static WebServives webServives = null;
     private static ApiWebServices apiWebServices = null;
-    //private static WebServices webServices = null; --> this one was written in Java
+
 
     private RetrofitConfigurationService(Context context){
         inittializeRetrofit(context);
@@ -44,7 +44,9 @@ public class RetrofitConfigurationService {
         return new RetrofitConfigurationService(context);
     }
 
-    /*public WebServives webServives(){
+    /* this was written in Java.
+
+     public WebServives webServives(){
         if(webServives == null){
             webServives = retrofitClient.create((WebServives.class));
         }

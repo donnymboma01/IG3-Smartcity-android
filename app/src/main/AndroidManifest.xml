@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ig3_smartcity_android">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,21 +13,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IG3Smartcityandroid">
         <activity
-            android:name=".ui.actitvity.LoginActivity"
-            android:exported="true"
-            >
+            android:name=".ui.actitvity.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.actitvity.LoginActivity"
+            android:exported="false">
+        </activity>
+
         <activity
             android:name=".ui.actitvity.RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".ui.actitvity.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

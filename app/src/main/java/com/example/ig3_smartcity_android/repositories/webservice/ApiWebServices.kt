@@ -12,14 +12,15 @@ interface ApiWebServices {
     @POST("v1/user/login")
     fun userLogin(@Body loginUserDTO: LoginUserDTO) : Call<TokenDTO>
 
+
     //permet d'inscrire un utilisateur.
     @POST("v1/user")
     fun registerUser(@Body userDTO: LoginUserDTO) : Call<TokenDTO>
 
     //récupère un repas par son id
-
     @GET("v1/meal/{id}")
     fun getMealById(@Path("id") mealId :Int ,@Header("Authorization") authHeader: String) :Call<MealDTO>
+
 
     //récupère tous les repas.
     @GET("v1/meal")

@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.ig3_smartcity_android.R;
 
@@ -15,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameText, passwordText;
     private Button buttonLogin;
     private Button switchToSecondActivity;
+    private TextView textWarnUsername, textWarnPassword;
 
 
     @Override
@@ -26,10 +28,16 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
         switchToSecondActivity = findViewById(R.id.signupID);
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this,getResources().getText(R.string.connection_message),Toast.LENGTH_LONG).show();
+                //if(isFormVlaid()){
+                    String username = usernameText.getText().toString();
+                    String password = passwordText.getText().toString();
+                    Toast.makeText(LoginActivity.this,getResources().getText(R.string.bonjour)+" "+username,Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(LoginActivity.this,getResources().getText(R.string.connection_message),Toast.LENGTH_LONG).show();
             }
         });
 
@@ -57,6 +65,19 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean isFormVlaid(){
+        if(usernameText.getText().toString().equals("")){
+            textWarnUsername.setVisibility(View.VISIBLE);
+            textWarnUsername.setText("Entrez votre pseudo");
+            return false;
+        }
+        if(passwordText.getText().toString().equals("")){
+            textWarnPassword.setVisibility(View.VISIBLE);
+            textWarnPassword.setText("Entre votre mot de passe");
+            return false;
+        }
+        return true;
+    }
 
     public void goToRegisterActivity(){
         Intent switchToRegister = new Intent(this,RegistrationActivity.class);
