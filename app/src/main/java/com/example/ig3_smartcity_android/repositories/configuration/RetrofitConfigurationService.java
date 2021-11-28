@@ -37,6 +37,7 @@ public class RetrofitConfigurationService {
         this.retrofitClient = new Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(MoshiConverterFactory.create(moshiConverter))
+                .baseUrl(BASE_URL)
                 .build();
     }
 

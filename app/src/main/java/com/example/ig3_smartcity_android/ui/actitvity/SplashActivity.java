@@ -1,7 +1,6 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;

@@ -9,7 +9,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="WELCOME TO THIS AMAZING APPLICATION"
+        android:textColor="@color/purple_500"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:fontFamily="@font/poppinsbold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
