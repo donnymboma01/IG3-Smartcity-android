@@ -3,7 +3,6 @@ package com.example.ig3_smartcity_android.repositories.configuration;
 import android.content.Context;
 
 import com.example.ig3_smartcity_android.repositories.webservice.ApiWebServices;
-import com.example.ig3_smartcity_android.repositories.webservice.WebServives;
 import com.example.ig3_smartcity_android.utils.ConnectivityCheckInterceptor;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
@@ -13,11 +12,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitConfigurationService {
 
-    private static final String BASE_URL ="http://172.1.2.163:3001/";
+    private static final String BASE_URL ="http://10.0.2.2:3001/";
 
     private Retrofit retrofitClient;
-
-   // private static WebServives webServives = null;
     private static ApiWebServices apiWebServices = null;
 
 

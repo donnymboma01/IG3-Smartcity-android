@@ -9,14 +9,13 @@ import java.util.*
 
 object TokenMapper {
 
-    fun mapToToken(tokenDTO: TokenDTO) :Token{
-        val parsedJWT = JWT(tokenDTO.token);
+    fun mapToToken(token: String) :Token{
+        val parsedJWT = JWT(token);
         val allClaims : Map<String,Claim> = parsedJWT.getClaims()
         val value : Value? = allClaims.getValue("value").asObject<Value>(Value::class.java)
         val userId :Int = value!!.userId
-        val username :String = value!!.username
+        val username :String = value.username
         val exp : Date? = parsedJWT.expiresAt
-        val token = tokenDTO.token
 
         return Token(username,userId,exp,token)
     }

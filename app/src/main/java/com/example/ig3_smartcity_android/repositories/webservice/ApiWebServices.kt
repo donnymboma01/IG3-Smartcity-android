@@ -10,7 +10,7 @@ interface ApiWebServices {
 
     //permet de se connecter
     @POST("v1/user/login")
-    fun userLogin(@Body loginUserDTO: LoginUserDTO) : Call<TokenDTO>
+    fun userLogin(@Body loginUserDTO: LoginUserDTO) : Call<String>
 
 
     //permet d'inscrire un utilisateur.
