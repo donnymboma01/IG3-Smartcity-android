@@ -29,11 +29,11 @@ class LoginUserViewModel(application: Application) : AndroidViewModel(applicatio
     private var userLoginMapper = UserLoginMapper
     private var tokenMapper = TokenMapper
 
-    fun loginUser(loginUser : LoginUser){
+    fun loginUser(loginUser : LoginUser) {
         apiWebServices.userLogin(userLoginMapper.mapToLoginUserDTO(loginUser)).enqueue(object :retrofit2.Callback<TokenDTO>{
             override  fun onResponse(call : Call<TokenDTO>,response : Response<TokenDTO>){
                 if(response.isSuccessful){
-                    _error.value = NetworkError.NO_CONNECTION_ERROR
+                    //_error.value = NetworkError.NO_CONNECTION_ERROR
                     _jwt.value = tokenMapper.mapToToken(response.body()!!)
 
                 }else{
@@ -48,6 +48,7 @@ class LoginUserViewModel(application: Application) : AndroidViewModel(applicatio
                     System.out.println(t)
                     _error.value = NetworkError.TECHNICAL_ERROR
                 }
+
             }
         })
     }

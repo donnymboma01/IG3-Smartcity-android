@@ -39,12 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(isFormVlaid()){
-                   // String username = usernameText.getText().toString();
-                    //String password = passwordText.getText().toString();
-                    //Toast.makeText(LoginActivity.this,getResources().getText(R.string.bonjour)+" "+username,Toast.LENGTH_LONG).show();
                 login();
-                Toast.makeText(LoginActivity.this,"vous etes connecté",Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this,"vous etes connecté",Toast.LENGTH_LONG).show();
 
             }
         });
@@ -88,19 +84,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //---Login--
-    private class UserLoginTask extends AsyncTask<LoginUser,Void,String>{
+    /*private class UserLoginTask extends AsyncTask<LoginUser,Void,String>{
         @Override
         protected String doInBackground(LoginUser... loginUsers) {
             loginUserViewModel.loginUser(loginUsers[0]);
             return loginUsers[0].getUsername();
         }
-    }
+    }*/
 
     public void login(){
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
         LoginUser loginUser = new LoginUser(username,password);
-        new UserLoginTask().execute(loginUser);
+        loginUserViewModel.loginUser(loginUser);
     }
 
     public void goToRegisterActivity(){

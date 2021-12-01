@@ -13,11 +13,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitConfigurationService {
 
-    private static final String BASE_URL ="http://localhost:3001/";
+    private static final String BASE_URL ="http://172.1.2.163:3001/";
 
     private Retrofit retrofitClient;
 
-    private static WebServives webServives = null;
+   // private static WebServives webServives = null;
     private static ApiWebServices apiWebServices = null;
 
 
@@ -45,9 +45,9 @@ public class RetrofitConfigurationService {
         return new RetrofitConfigurationService(context);
     }
 
-    /* this was written in Java.
+    // this was written in Java.
 
-     public WebServives webServives(){
+     /*public WebServives webServives(){
         if(webServives == null){
             webServives = retrofitClient.create((WebServives.class));
         }
