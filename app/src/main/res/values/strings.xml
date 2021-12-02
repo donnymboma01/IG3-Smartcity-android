@@ -27,6 +27,7 @@
 
 
     <string name="connection_error">Pas de connexion internet</string>
+    <string name="no_error_detected">Aucune erreur detectée</string>
     <string name="request_error">Une erreur s\'est produite pendant la requete</string>
     <string name="technical_error">Il y a une erreur technique</string>
     <string name="usernameWarneMessage">le pseudo est obligatoire!</string>

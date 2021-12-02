@@ -5,7 +5,8 @@ import com.example.ig3_smartcity_android.R;
 public enum NetworkError {
     NO_CONNECTION_ERROR(R.string.connection_error),
     REQUEST_ERROR(R.string.request_error),
-    TECHNICAL_ERROR(R.string.technical_error);
+    TECHNICAL_ERROR(R.string.technical_error),
+    NO_ERROR_DETECTED(R.string.no_error_detected);
 
     private int errorMessage;
 
