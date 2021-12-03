@@ -23,6 +23,14 @@
     <!--Errors-->
     <string name="username_empty_message">le pseudo est obligatoire !</string>
     <string name="password_empty_message">le mot de passe est obligatoire !</string>
+    <string name="firstname_empty_error">prénom obligatoire</string>
+    <string name="lastname_empty_error">nom obligatoire</string>
+    <string name="province_empty_error">province est obligatoire</string>
+    <string name="city_empty_error">la ville est obligatoire</string>
+    <string name="street_and_number_empty_error">le numéro et la rue sont obligatoires</string>
+    <string name="address_empty_error">adresse obligatoire !</string>
+    <string name="mandatory_fields_error">ces champs sont obligatoires</string>
+
     <string name="register_page_message">inscription</string>
 
 

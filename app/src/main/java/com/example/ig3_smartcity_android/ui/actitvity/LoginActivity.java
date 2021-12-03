@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.ig3_smartcity_android.R;
@@ -21,8 +21,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameText, passwordText;
     private Button buttonLogin;
     private Button switchToRegisterActivity;
-    private TextView textWarnUsername, textWarnPassword;
     private LoginUserViewModel loginUserViewModel;
+    private boolean areAllFieldsChecked = false;
+
+    private ProgressBar progressBar; //sera utilisé(ou pas) pour mettre l'icone de chargement de connexion lorsqu'on se connecte.
 
 
     @Override
@@ -39,8 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login();
-
+                areAllFieldsChecked = areFiledsNotEmpty();
+                if(areAllFieldsChecked){
+                    login();
+                }
             }
         });
 
@@ -48,15 +52,20 @@ public class LoginActivity extends AppCompatActivity {
         switchToRegisterActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(LoginActivity.this,getResources().getText(R.string.register_page_message),Toast.LENGTH_LONG);
+                /*Toast toast = Toast.makeText(LoginActivity.this,getResources().getText(R.string.register_page_message),Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP|Gravity.CENTER,20,30);
-                toast.show();
+                toast.show();*/
                 goToRegisterActivity();
             }
         });
     }
 
-    public boolean checkFields(){
+    /**
+     *
+     * @return true if all fields are filled and false otherwise.
+     */
+
+    public boolean areFiledsNotEmpty(){
         if(usernameText.length() == 0){
             usernameText.setError(getResources().getText(R.string.username_empty_message));
             return false;
@@ -68,21 +77,10 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean isFormVlaid(){
-        if(usernameText.getText().toString().equals("")){
-            textWarnUsername.setVisibility(View.VISIBLE);
-            textWarnUsername.setText(getResources().getText(R.string.usernameWarneMessage));
-            return false;
-        }
-        if(passwordText.getText().toString().equals("")){
-            textWarnPassword.setVisibility(View.VISIBLE);
-            textWarnPassword.setText(getResources().getText(R.string.passwordWarnMessage));
-            return false;
-        }
-        return true;
-    }
 
-    //---Login--
+    //---Login-- this is very stupid from me
+    //Retrofit is already asynchronous, so this was the old way to do it
+
     /*private class UserLoginTask extends AsyncTask<LoginUser,Void,String>{
         @Override
         protected String doInBackground(LoginUser... loginUsers) {
@@ -90,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             return loginUsers[0].getUsername();
         }
     }*/
+
 
     public void login(){
         String username = usernameText.getText().toString();
