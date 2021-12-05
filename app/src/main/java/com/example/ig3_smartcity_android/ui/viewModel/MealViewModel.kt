@@ -11,6 +11,7 @@ import com.example.ig3_smartcity_android.repositories.dto.MealDTO
 import com.example.ig3_smartcity_android.services.mappers.MealMapper
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(application: Application) :AndroidViewModel(application) {
@@ -24,8 +25,8 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
     private var mealMapper = MealMapper
 
     fun getAllMeals(){
-        mealWebServices.getAllMeals().enqueue(object :retrofit2.Callback<MealDTO>{
-            override fun onResponse(call:Call<MealDTO>, response: Response<MealDTO>){
+        mealWebServices.getAllMeals().enqueue(object : Callback<MealDTO> {
+            override fun onResponse(call:Call<MealDTO?>, response: Response<MealDTO?>){
                 if(response.isSuccessful){
                     _meal.value = mealMapper.mapToMeal(response.body()!!)
                     _error.value = NetworkError.NO_ERROR_DETECTED

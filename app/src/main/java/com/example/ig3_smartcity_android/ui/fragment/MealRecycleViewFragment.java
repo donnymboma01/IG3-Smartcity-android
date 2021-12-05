@@ -17,6 +17,7 @@ import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.Category;
 import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.model.User;
+import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.viewModel.MealViewModel;
 import org.jetbrains.annotations.NotNull;
 import java.util.Date;
@@ -45,13 +46,18 @@ public class MealRecycleViewFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MealViewModel.class);
         viewModel.getAllMeals();
         mealAdapter = new MealAdapter(getActivity());
-       // viewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
+
+
+       //viewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
 
         mealRecycleView.setAdapter(mealAdapter);
         fragment = this;
         return root;
     }
 
+    public interface OnItemSelectedListener{
+        void onItemSelected(int position);
+    }
 
     //View  Holder.
     private static class MealViewHolder extends RecyclerView.ViewHolder{
@@ -63,7 +69,7 @@ public class MealRecycleViewFragment extends Fragment {
         TextView user;
         TextView category;
 
-        public MealViewHolder(@NonNull View itemView, AdapterView.OnItemSelectedListener listener) {
+        public MealViewHolder(@NonNull View itemView, OnItemSelectedListener listener) {
             super(itemView);
             mealName = itemView.findViewById(R.id.mealName);
             description = itemView.findViewById(R.id.description);
@@ -74,11 +80,12 @@ public class MealRecycleViewFragment extends Fragment {
             category = itemView.findViewById(R.id.category);
 
             itemView.setOnClickListener(e->{
-                int currentMealPosition = getAbsoluteAdapterPosition(); //getAdaptaterPosition() n'est plus disponible.
-                //listener.onItemSelected(currentMealPosition); --> je mets bien un entier mais...error wtf?
+                int currentMealPosition = getAbsoluteAdapterPosition();
+                listener.onItemSelected(currentMealPosition);
             });
         }
     }
+
 
     //Adapter.
     private static class MealAdapter extends RecyclerView.Adapter<MealViewHolder>{
@@ -93,10 +100,18 @@ public class MealRecycleViewFragment extends Fragment {
         @NonNull
         @Override
         public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_item_layout,parent,false);
-            MealViewHolder vh = new MealViewHolder(view,position->{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_meal_description,parent,false);
+            MealViewHolder vh = new MealViewHolder(view, position->{
                 Meal touchedMeal = meals.get(position);
-                //Intent intent = new Intent(fragment.getActivity(),)
+                Intent intent = new Intent(fragment.getActivity(), MealDescription.class);
+                intent.putExtra("name",touchedMeal.getName());
+                intent.putExtra("description",touchedMeal.getDescription());
+                intent.putExtra("price",touchedMeal.getPrice());
+                intent.putExtra("publication_date",touchedMeal.getPublication_date());
+                intent.putExtra("isAvailable",touchedMeal.isAvailable());
+                //intent.putExtra("user",touchedMeal.getUser());
+                //intent.putExtra("category",touchedMeal.getCategory());
+                fragment.getActivity().startActivity(intent);
             });
             return vh;
         }

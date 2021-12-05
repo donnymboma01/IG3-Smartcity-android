@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.ig3_smartcity_android"
-        minSdk 28
+        minSdk 29
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -49,7 +49,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    // retrofit
+    // retrofit & moshi
     def version_retrofit = "2.9.0"
     def version_moshi = "1.11.0"
     implementation "com.squareup.moshi:moshi:$version_moshi"
