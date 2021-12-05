@@ -24,7 +24,7 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
     private var mealMapper = MealMapper
 
     fun getAllMeals(){
-        mealWebServices.getAllMeals("Bearer").enqueue(object :retrofit2.Callback<MealDTO>{
+        mealWebServices.getAllMeals().enqueue(object :retrofit2.Callback<MealDTO>{
             override fun onResponse(call:Call<MealDTO>, response: Response<MealDTO>){
                 if(response.isSuccessful){
                     _meal.value = mealMapper.mapToMeal(response.body()!!)

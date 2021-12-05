@@ -13,9 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IG3Smartcityandroid"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".ui.actitvity.HomeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.actitvity.SplashActivity"
             android:exported="true">

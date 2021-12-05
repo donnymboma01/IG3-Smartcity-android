@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
+        progressBar = findViewById(R.id.loadingId);
         loginUserViewModel = new  ViewModelProvider(this).get(LoginUserViewModel.class);
         switchToRegisterActivity = findViewById(R.id.signupID);
 
@@ -91,6 +92,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void login(){
+        progressBar.setVisibility(View.VISIBLE);
+        buttonLogin.setVisibility(View.GONE);
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
         LoginUser loginUser = new LoginUser(username,password);
