@@ -1,6 +1,7 @@
 package com.example.ig3_smartcity_android.ui.viewModel
 
 import android.app.Application
+import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +16,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(application: Application) :AndroidViewModel(application) {
-    private val _meal = MutableLiveData<Meal>()
-    val meal : LiveData<Meal> = _meal
+    private val _meal = MutableLiveData<List<Meal>>()
+    val meal : LiveData<List<Meal>> = _meal
 
     private val _error  = MutableLiveData<NetworkError?>()
     val error : LiveData<NetworkError?> = _error
@@ -25,17 +26,17 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
     private var mealMapper = MealMapper
 
     fun getAllMeals(){
-        mealWebServices.getAllMeals().enqueue(object : Callback<MealDTO> {
-            override fun onResponse(call:Call<MealDTO?>, response: Response<MealDTO?>){
+        mealWebServices.getAllMeals().enqueue(object : Callback<List<MealDTO>> {
+            override fun onResponse(@NonNull call:Call<List<MealDTO>>,@NonNull response: Response<List<MealDTO>>){
                 if(response.isSuccessful){
-                    _meal.value = mealMapper.mapToMeal(response.body()!!)
+                   // _meal.value = mealMapper.mapToMeal(response.body())
                     _error.value = NetworkError.NO_ERROR_DETECTED
                 }else{
                     _error.value = NetworkError.REQUEST_ERROR
                 }
             }
 
-            override fun onFailure(call: Call<MealDTO>, t: Throwable) {
+            override fun onFailure(@NonNull call: Call<List<MealDTO>>,@NonNull t: Throwable) {
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{

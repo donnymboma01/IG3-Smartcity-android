@@ -10,8 +10,13 @@ import com.example.ig3_smartcity_android.repositories.dto.UserDTO
 object MealMapper {
 
     fun mapToMealDto(meal: Meal):MealDTO?{
-        return MealDTO(meal.name,meal.description,meal.price,meal.publication_date,meal.isAvailable,
-            mapToUserDto(meal.user), mapToCategoryDto(meal.category))
+        if(meal == null){
+            return null
+        }else{
+            return MealDTO(meal.name,meal.description,meal.price,meal.publication_date,meal.isAvailable,
+                mapToUserDto(meal.user), mapToCategoryDto(meal.category))
+        }
+
     }
 
     fun mapToCategoryDto(category :Category):CategoryDTO{

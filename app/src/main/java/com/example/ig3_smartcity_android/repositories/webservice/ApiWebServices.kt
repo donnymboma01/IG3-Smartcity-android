@@ -19,10 +19,12 @@ interface ApiWebServices {
 
     //récupère un repas par son id
     @GET("/v1/meal/{id}")
-    fun getMealById(@Path("id") mealId :Int ,@Header("Authorization") authHeader: String) :Call<MealDTO>
+    fun getMealById(@Path("id") mealId :Int ) :Call<MealDTO>
 
+    //@GET("/v1/meal/{id}")
+    //fun getMealById(@Path("id") mealId :Int ,@Header("Authorization") authHeader: String) :Call<MealDTO>
 
     //récupère tous les repas.
     @GET("/v1/meal")
-    fun getAllMeals() : Call<MealDTO>
+    fun getAllMeals() : Call<List<MealDTO>>
 }

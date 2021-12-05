@@ -122,19 +122,19 @@ public class MealRecycleViewFragment extends Fragment {
             String name  = meal.getName();
             String description = meal.getDescription();
             Float price = meal.getPrice();
-            Date publication_date = meal.getPublication_date();
+            String publication_date = meal.getPublication_date();
             User user = meal.getUser();
             Category category = meal.getCategory();
 
             holder.mealName.setText(name);
             holder.description.setText(description);
-            //holder.price.setText(price);
+            holder.publication_date.setText(publication_date);
 
         }
 
         @Override
         public int getItemCount() {
-            return meals == null?0:meals.size();
+            return meals == null ? 0:meals.size();
         }
 
         public void setMeals(List<Meal> meals){
