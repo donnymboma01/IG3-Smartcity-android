@@ -26,5 +26,5 @@ interface ApiWebServices {
 
     //récupère tous les repas.
     @GET("/v1/meal")
-    fun getAllMeals() : Call<List<MealDTO>>
+    fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
 }

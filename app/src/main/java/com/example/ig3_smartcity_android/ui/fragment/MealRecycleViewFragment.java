@@ -2,6 +2,7 @@ package com.example.ig3_smartcity_android.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.Category;
 import com.example.ig3_smartcity_android.model.Meal;
+import com.example.ig3_smartcity_android.model.Token;
 import com.example.ig3_smartcity_android.model.User;
 import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.viewModel.MealViewModel;
@@ -29,6 +31,8 @@ public class MealRecycleViewFragment extends Fragment {
     private static Fragment fragment;
     private MealAdapter mealAdapter;
     private MealViewModel viewModel;
+    private SharedPreferences sharedPreferences;
+    private User user;
 
 
     public MealRecycleViewFragment() {
@@ -42,18 +46,30 @@ public class MealRecycleViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_meal_recycle_view,container,false);
         RecyclerView mealRecycleView = root.findViewById(R.id.mealRecyclerView);
+
+        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString(getString(R.string.user_id_token),"");
+        Integer userId = sharedPreferences.getInt(getString(R.string.user_id_token),0);
+        //Long expDate = sharedPreferences.getLong(getString(R.string.expDate),0); //TODO : voir comment récuperer la date d'expiration du token pour placer en sharedPreference.
+        //long expDate = sharedPreferences.getLong(getString(R.string.expDate),0);
+        //String expDate = sharedPreferences.getString(getString(R.string.expDate),"");
+        String token = sharedPreferences.getString(getString(R.string.token),"");
+
+        Token jwtToken = new Token(username,userId,token);
+
         mealRecycleView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         viewModel = new ViewModelProvider(this).get(MealViewModel.class);
-        viewModel.getAllMeals();
+
+        viewModel.getAllMeals(jwtToken);
         mealAdapter = new MealAdapter(getActivity());
-
-
-       //viewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
+        viewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
 
         mealRecycleView.setAdapter(mealAdapter);
         fragment = this;
         return root;
     }
+
+    // interface qui fournit la méthode(void) de récuperation de l'indice du plat cliqué.
 
     public interface OnItemSelectedListener{
         void onItemSelected(int position);
@@ -63,21 +79,12 @@ public class MealRecycleViewFragment extends Fragment {
     private static class MealViewHolder extends RecyclerView.ViewHolder{
         TextView mealName;
         TextView description;
-        TextView price;
-        TextView publication_date;
-        TextView isAvailable;
-        TextView user;
-        TextView category;
+
 
         public MealViewHolder(@NonNull View itemView, OnItemSelectedListener listener) {
             super(itemView);
-            mealName = itemView.findViewById(R.id.mealName);
-            description = itemView.findViewById(R.id.description);
-            price = itemView.findViewById(R.id.price);
-            publication_date = itemView.findViewById(R.id.publication_date);
-            isAvailable = itemView.findViewById(R.id.isAvailable);
-            user = itemView.findViewById(R.id.user);
-            category = itemView.findViewById(R.id.category);
+            mealName = itemView.findViewById(R.id.mealNameID);
+            description = itemView.findViewById(R.id.mealDescription);
 
             itemView.setOnClickListener(e->{
                 int currentMealPosition = getAbsoluteAdapterPosition();
@@ -100,7 +107,7 @@ public class MealRecycleViewFragment extends Fragment {
         @NonNull
         @Override
         public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_meal_description,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_item_layout,parent,false);
             MealViewHolder vh = new MealViewHolder(view, position->{
                 Meal touchedMeal = meals.get(position);
                 Intent intent = new Intent(fragment.getActivity(), MealDescription.class);
@@ -121,14 +128,13 @@ public class MealRecycleViewFragment extends Fragment {
             Meal meal = meals.get(position);
             String name  = meal.getName();
             String description = meal.getDescription();
-            Float price = meal.getPrice();
+            /*Float price = meal.getPrice();
             String publication_date = meal.getPublication_date();
             User user = meal.getUser();
-            Category category = meal.getCategory();
+            Category category = meal.getCategory();*/
 
             holder.mealName.setText(name);
             holder.description.setText(description);
-            holder.publication_date.setText(publication_date);
 
         }
 
@@ -139,6 +145,7 @@ public class MealRecycleViewFragment extends Fragment {
 
         public void setMeals(List<Meal> meals){
             this.meals = meals;
+            System.out.println(meals);
             notifyDataSetChanged();
         }
     }

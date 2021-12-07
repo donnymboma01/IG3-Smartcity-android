@@ -1,15 +1,18 @@
 package com.example.ig3_smartcity_android.ui.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ig3_smartcity_android.model.Meal
 import com.example.ig3_smartcity_android.model.NetworkError
+import com.example.ig3_smartcity_android.model.Token
 import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService
 import com.example.ig3_smartcity_android.repositories.dto.MealDTO
 import com.example.ig3_smartcity_android.services.mappers.MealMapper
+import com.example.ig3_smartcity_android.services.mappers.TokenMapper
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,14 +25,15 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
     private val _error  = MutableLiveData<NetworkError?>()
     val error : LiveData<NetworkError?> = _error
 
+
     private var mealWebServices = RetrofitConfigurationService.getInstance(application).apiWebServices()
     private var mealMapper = MealMapper
 
-    fun getAllMeals(){
-        mealWebServices.getAllMeals().enqueue(object : Callback<List<MealDTO>> {
+    fun getAllMeals(token : Token){
+        mealWebServices.getAllMeals("Bearer "+token.token).enqueue(object : Callback<List<MealDTO>> {
             override fun onResponse(@NonNull call:Call<List<MealDTO>>,@NonNull response: Response<List<MealDTO>>){
                 if(response.isSuccessful){
-                   // _meal.value = mealMapper.mapToMeal(response.body())
+                    _meal.value = mealMapper.mapToMeal(response.body())
                     _error.value = NetworkError.NO_ERROR_DETECTED
                 }else{
                     _error.value = NetworkError.REQUEST_ERROR
@@ -40,7 +44,7 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
-                    System.out.println(t)
+                    println(t)
                     _error.value = NetworkError.TECHNICAL_ERROR
                 }
             }

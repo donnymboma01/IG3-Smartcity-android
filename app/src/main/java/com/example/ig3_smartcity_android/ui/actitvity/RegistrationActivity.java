@@ -46,15 +46,6 @@ public class RegistrationActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.registrationBtnID);
         switchBackToLogin = findViewById(R.id.backToLoginID);
 
-        /*switchBackToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                areAllFieldsChecked = isFormValid();
-                if(areAllFieldsChecked){
-                    goBackToLogin();
-                }
-            }
-        });*/
 
     }
 

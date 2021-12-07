@@ -3,7 +3,9 @@ package com.example.ig3_smartcity_android.ui.actitvity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.LoginUser;
+import com.example.ig3_smartcity_android.model.Token;
+import com.example.ig3_smartcity_android.ui.fragment.MealRecycleViewFragment;
 import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button switchToRegisterActivity;
     private LoginUserViewModel loginUserViewModel;
     private boolean areAllFieldsChecked = false;
+    private SharedPreferences sharedPreferences;
+
 
     private ProgressBar progressBar; //sera utilisé(ou pas) pour mettre l'icone de chargement de connexion lorsqu'on se connecte.
 
@@ -32,12 +38,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
         usernameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
         progressBar = findViewById(R.id.loadingId);
         loginUserViewModel = new  ViewModelProvider(this).get(LoginUserViewModel.class);
         switchToRegisterActivity = findViewById(R.id.signupID);
+
+
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,14 +63,18 @@ public class LoginActivity extends AppCompatActivity {
         switchToRegisterActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Toast toast = Toast.makeText(LoginActivity.this,getResources().getText(R.string.register_page_message),Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP|Gravity.CENTER,20,30);
-                toast.show();*/
                 goToRegisterActivity();
             }
         });
     }
 
+    public void preferencesSaved(Token token){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.username_token),token.getUsername());
+        editor.putString(getString(R.string.token),token.getToken());
+        editor.putInt(getString(R.string.user_id_token), token.getUserId());
+        editor.commit();
+    }
     /**
      *
      * @return true if all fields are filled and false otherwise.
@@ -92,12 +106,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void login(){
-        progressBar.setVisibility(View.VISIBLE);
-        buttonLogin.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.VISIBLE);
+        //buttonLogin.setVisibility(View.GONE);
         String username = usernameText.getText().toString();
         String password = passwordText.getText().toString();
         LoginUser loginUser = new LoginUser(username,password);
         loginUserViewModel.loginUser(loginUser);
+    }
+
+    public void goToMealFragment(){
+        Intent intent = new Intent(this, MealRecycleViewFragment.class);
+        startActivity(intent);
     }
 
     public void goToRegisterActivity(){

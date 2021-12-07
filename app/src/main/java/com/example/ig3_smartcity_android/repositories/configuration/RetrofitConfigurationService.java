@@ -42,7 +42,7 @@ public class RetrofitConfigurationService {
         return new RetrofitConfigurationService(context);
     }
 
-    // this was written in Java.
+    // this was written in Java. I mean, the WebServices interface was written in java.
 
      /*public WebServives webServives(){
         if(webServives == null){

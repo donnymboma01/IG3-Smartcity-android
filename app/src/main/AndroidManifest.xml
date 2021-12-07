@@ -3,6 +3,7 @@
     package="com.example.ig3_smartcity_android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,11 +17,19 @@
         <activity
             android:name=".ui.actitvity.MealDescription"
             android:exported="false" />
+
         <activity
             android:name=".ui.actitvity.SplashActivity"
-            android:exported="false">
+            android:exported="true">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+
         <activity
             android:name=".ui.actitvity.LoginActivity"
             android:exported="false" />
@@ -30,14 +39,10 @@
 
         <activity
             android:name=".ui.actitvity.MainActivity"
-            android:exported="true" >
+            android:exported="false" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
     </application>
 
 </manifest>

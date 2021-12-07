@@ -50,6 +50,12 @@
         Bienvenues à l\'application de donation de nourriture <b></b>
 
     </string>
+    <string name="token">token</string>
+    <string name="sharedPref">sharedPref</string>
+    <string name="username_token">username</string>
+    <string name="user_id_token">userId</string>
+    <string name="expDate">expDate</string>
+
     <string name="se_connecter">SE CONNECTER</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

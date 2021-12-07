@@ -15,8 +15,9 @@ object TokenMapper {
         val value : Value? = allClaims.getValue("value").asObject<Value>(Value::class.java)
         val userId :Int = value!!.userId
         val username :String = value.username
-        val exp : Date? = parsedJWT.expiresAt
+        //val exp : Date? = parsedJWT.expiresAt
 
-        return Token(username,userId,exp,token)
+        // return Token(username,userId,exp,token)
+        return Token(username,userId,token)
     }
 }
