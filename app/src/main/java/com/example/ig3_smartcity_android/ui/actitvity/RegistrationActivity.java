@@ -47,10 +47,7 @@ public class RegistrationActivity extends AppCompatActivity {
         provinceEditText = findViewById(R.id.province);
         cityEditText = findViewById(R.id.city);
         addressEditText = findViewById(R.id.adresse);
-
         buttonRegister = findViewById(R.id.registrationBtnID);
-        switchBackToLogin = findViewById(R.id.backToLoginID);
-
 
     }
 

@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        /*buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 areAllFieldsChecked = areFiledsNotEmpty();
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-        });
+        });*/
 
        // loginUserViewModel.getJwt().observe();
 
@@ -76,13 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void preferencesSaved(Token token){
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        //editor.putString(getString(R.string.username_token),token.getUsername());
-        editor.putString(getString(R.string.token),token.getToken());
-        //editor.putInt(getString(R.string.user_id_token), token.getUserId());
-        editor.apply();
-    }
     /**
      *
      * @return true if all fields are filled and false otherwise.
@@ -101,39 +94,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //---Login-- this is very stupid from me
-    //Retrofit is already asynchronous, so this was the old way to do it
-
-    /*private class UserLoginTask extends AsyncTask<LoginUser,Void,String>{
-        @Override
-        protected String doInBackground(LoginUser... loginUsers) {
-            loginUserViewModel.loginUser(loginUsers[0]);
-            return loginUsers[0].getUsername();
-        }
-    }*/
-
-
-    public void login(){
-        //progressBar.setVisibility(View.VISIBLE);
-        //buttonLogin.setVisibility(View.GONE);
-        String username = usernameText.getText().toString();
-        String password = passwordText.getText().toString();
-        LoginUser loginUser = new LoginUser(username,password);
-        loginUserViewModel.loginUser(loginUser);
-    }
-
-    public void goToMealFragment(){
-        Intent intent = new Intent(this, MealRecycleViewFragment.class);
-        startActivity(intent);
-    }
 
     public void goToRegisterActivity(){
         Intent switchToRegister = new Intent(this,RegistrationActivity.class);
         startActivity(switchToRegister);
-    }
-
-    public void goToMainActivity(){
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
     }
 }

@@ -14,7 +14,7 @@ object MealMapper {
         if(meal == null){
             return null
         }else{
-            return MealDTO(meal.name,meal.description)
+            return MealDTO(meal.name,meal.description,meal.image,meal.portion_number)
         }
 
     }
@@ -66,9 +66,9 @@ object MealMapper {
             return  null
         } else {
             val meals = ArrayList<Meal>()
-            for ((name, description) in mealdto) {
+            for ((name, description,image,portion_number) in mealdto) {
                 val meal =
-                    Meal(name, description)
+                    Meal(name, description,image,portion_number)
                 meals.add(meal)
             }
             return meals

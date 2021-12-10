@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".ui.actitvity.MealDescription">
 
 
@@ -17,13 +19,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066"
-        tools:src="@tools:sample/avatars" />
+        android:src="@drawable/bicky"
+         />
 
     <TextView
         android:id="@+id/mealName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nom_repas"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/teal_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.278"
@@ -45,10 +51,10 @@
          />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/portion_number_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/prix"
+        android:text="@string/portion_number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.272"

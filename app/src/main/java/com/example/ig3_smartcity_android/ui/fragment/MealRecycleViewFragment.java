@@ -3,6 +3,7 @@ package com.example.ig3_smartcity_android.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.Category;
 import com.example.ig3_smartcity_android.model.Meal;
@@ -73,14 +77,18 @@ public class MealRecycleViewFragment extends Fragment {
 
     //View  Holder.
     private static class MealViewHolder extends RecyclerView.ViewHolder{
+        ImageView image;
         TextView mealName;
         TextView description;
+        TextView portion_number;
 
 
         public MealViewHolder(@NonNull View itemView, OnItemSelectedListener listener) {
             super(itemView);
+            image = itemView.findViewById(R.id.mealImageId);
             mealName = itemView.findViewById(R.id.mealNameID);
             description = itemView.findViewById(R.id.mealDescription);
+            portion_number = itemView.findViewById(R.id.portionNumber);
 
             itemView.setOnClickListener(e->{
                 int currentMealPosition = getAbsoluteAdapterPosition();
@@ -109,7 +117,9 @@ public class MealRecycleViewFragment extends Fragment {
                 Intent intent = new Intent(fragment.getActivity(), MealDescription.class);
                 intent.putExtra("name",touchedMeal.getName());
                 intent.putExtra("description",touchedMeal.getDescription());
-                //intent.putExtra("price",touchedMeal.getPrice());
+                intent.putExtra("image",touchedMeal.getImage());
+                intent.putExtra("portion_number",touchedMeal.getPortion_number());
+                //TODO : voir comment afficher  la date de publication,isAvailable, user et la catégorie.
                 //intent.putExtra("publication_date",touchedMeal.getPublication_date());
                 //intent.putExtra("isAvailable",touchedMeal.isAvailable());
                 //intent.putExtra("user",touchedMeal.getUser());
@@ -124,7 +134,9 @@ public class MealRecycleViewFragment extends Fragment {
             Meal meal = meals.get(position);
             String name  = meal.getName();
             String description = meal.getDescription();
-            //Float price = meal.getPrice();
+            String mealImage = meal.getImage();
+            Uri mealUri = Uri.parse(mealImage);
+            Integer portionNumber = meal.getPortion_number();
             //String publication_date = meal.getPublication_date();
             //User user = meal.getUser();
             //Category category = meal.getCategory();
@@ -132,8 +144,12 @@ public class MealRecycleViewFragment extends Fragment {
 
             holder.mealName.setText(name);
             holder.description.setText(description);
+            holder.portion_number.setText("Quantité : "+portionNumber.toString());
 
-
+            Glide.with(context)
+                    .load(mealUri)
+                    .placeholder(R.drawable.bicky)
+                    .into(holder.image);
         }
 
         @Override
