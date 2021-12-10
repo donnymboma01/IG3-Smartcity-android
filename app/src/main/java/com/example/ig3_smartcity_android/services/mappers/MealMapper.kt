@@ -10,12 +10,11 @@ import java.util.ArrayList
 
 object MealMapper {
 
-    fun mapToMealDto(meal: Meal):MealDTO?{
+    fun mapToMealDto(meal: Meal?):MealDTO?{
         if(meal == null){
             return null
         }else{
-            return MealDTO(meal.name,meal.description,meal.price,meal.publication_date,meal.isAvailable,
-                mapToUserDto(meal.user), mapToCategoryDto(meal.category))
+            return MealDTO(meal.name,meal.description)
         }
 
     }
@@ -67,10 +66,9 @@ object MealMapper {
             return  null
         } else {
             val meals = ArrayList<Meal>()
-            for ((name, description, price, publication_date, isAvailable, user, category) in mealdto) {
+            for ((name, description) in mealdto) {
                 val meal =
-                    Meal(name, description, price, publication_date, isAvailable,
-                        mapToUser(user) , mapToCategory(category))
+                    Meal(name, description)
                 meals.add(meal)
             }
             return meals

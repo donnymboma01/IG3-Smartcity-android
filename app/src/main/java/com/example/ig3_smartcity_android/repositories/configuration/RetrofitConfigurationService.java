@@ -1,6 +1,6 @@
 package com.example.ig3_smartcity_android.repositories.configuration;
 
-import android.content.Context;
+import  android.content.Context;
 
 import com.example.ig3_smartcity_android.repositories.webservice.ApiWebServices;
 import com.example.ig3_smartcity_android.utils.ConnectivityCheckInterceptor;

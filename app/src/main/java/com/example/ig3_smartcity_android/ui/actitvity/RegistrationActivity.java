@@ -2,7 +2,9 @@ package com.example.ig3_smartcity_android.ui.actitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ public class RegistrationActivity extends AppCompatActivity {
             addressEditText;
     Button buttonRegister, switchBackToLogin;
     private boolean areAllFieldsChecked = false;
+    private SharedPreferences sharedPreferences;
 
     private ProgressBar progressBar;
 
@@ -32,8 +35,10 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        sharedPreferences = getSharedPreferences(getString(R.string.sharedPref), Context.MODE_PRIVATE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //pour afficher le bouton retour vers l'activité login.
+        getSupportActionBar().setTitle(R.string.inscription);
 
         firstnameEditText = findViewById(R.id.prenom);
         nameEditText = findViewById(R.id.nom);

@@ -4,7 +4,7 @@
     <string name="username">pseudo</string>
     <string name="password">mot de passe</string>
     <string name="login">login</string>
-    <string name="connexion">connexion</string>
+    <string name="connexion">Connexion</string>
     <string name="Inscription">Inscription</string>
     <string name="prénom">prénom</string>
     <string name="nom">nom</string>
@@ -18,6 +18,8 @@
     <string name="registrate">Pas encore inscrit ?, crée un compte</string>
     <string name="back_to_login">retour</string>
     <string name="bonjour">Bonjour </string>
+    <string name="liste_repas">Liste de repas</string>
+    <string name="repas_position">Repas selectionné</string>
 
 
     <!--Errors-->
@@ -30,42 +32,44 @@
     <string name="street_and_number_empty_error">le numéro et la rue sont obligatoires</string>
     <string name="address_empty_error">adresse obligatoire !</string>
     <string name="mandatory_fields_error">ces champs sont obligatoires</string>
-
-    <string name="register_page_message">inscription</string>
-
-
     <string name="connection_error">Pas de connexion internet</string>
     <string name="no_error_detected">Aucune erreur detectée</string>
     <string name="request_error">Une erreur s\'est produite pendant la requete</string>
     <string name="technical_error">Il y a une erreur technique</string>
     <string name="usernameWarneMessage">le pseudo est obligatoire!</string>
     <string name="passwordWarnMessage">le mot de passe est obligatoire</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
 
-    <string name="connection_message">Vous etes connecté !</string>
 
     <!--Welcome message-->
-    <string name="welcome_message">
+    <string name="welcome_message">Bienvenues à l\'application de donation de nourriture <b></b></string>
+    <string name="register_page_message">inscription</string>
+    <string name="connection_message">Vous etes connecté !</string>
+    <string name="se_connecter">SE CONNECTER</string>
 
-        Bienvenues à l\'application de donation de nourriture <b></b>
-
-    </string>
+    <!--Share preferences values-->
     <string name="token">token</string>
     <string name="sharedPref">sharedPref</string>
     <string name="username_token">username</string>
     <string name="user_id_token">userId</string>
     <string name="expDate">expDate</string>
 
-    <string name="se_connecter">SE CONNECTER</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prix">Pirx :</string>
+    <string name="disponible">Disponible :</string>
+    <string name="utilisateur">Client :</string>
+    <string name="categorie">Categorie :</string>
+    <string name="description">Description :</string>
+    <string name="nom_repas">Nom du repas :</string>
+    <string name="header_text">Liste des repas</string>
+
 </resources>

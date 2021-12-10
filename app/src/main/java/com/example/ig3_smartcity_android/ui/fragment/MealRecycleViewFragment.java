@@ -47,30 +47,26 @@ public class MealRecycleViewFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_meal_recycle_view,container,false);
         RecyclerView mealRecycleView = root.findViewById(R.id.mealRecyclerView);
 
+        //récupère la valeur du token dans le sharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString(getString(R.string.user_id_token),"");
-        Integer userId = sharedPreferences.getInt(getString(R.string.user_id_token),0);
-        //Long expDate = sharedPreferences.getLong(getString(R.string.expDate),0); //TODO : voir comment récuperer la date d'expiration du token pour placer en sharedPreference.
-        //long expDate = sharedPreferences.getLong(getString(R.string.expDate),0);
-        //String expDate = sharedPreferences.getString(getString(R.string.expDate),"");
         String token = sharedPreferences.getString(getString(R.string.token),"");
-
-        Token jwtToken = new Token(username,userId,token);
+        Token jwtToken = new Token(token);
 
         mealRecycleView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         viewModel = new ViewModelProvider(this).get(MealViewModel.class);
 
+        //le token généré lors de la connexion de l'utilisateur.
         viewModel.getAllMeals(jwtToken);
         mealAdapter = new MealAdapter(getActivity());
         viewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
 
         mealRecycleView.setAdapter(mealAdapter);
+
         fragment = this;
         return root;
     }
 
-    // interface qui fournit la méthode(void) de récuperation de l'indice du plat cliqué.
-
+    // interface qui fournit la méthode(void) de récuperation de l'indice de l'élément de la liste cliqué.
     public interface OnItemSelectedListener{
         void onItemSelected(int position);
     }
@@ -113,9 +109,9 @@ public class MealRecycleViewFragment extends Fragment {
                 Intent intent = new Intent(fragment.getActivity(), MealDescription.class);
                 intent.putExtra("name",touchedMeal.getName());
                 intent.putExtra("description",touchedMeal.getDescription());
-                intent.putExtra("price",touchedMeal.getPrice());
-                intent.putExtra("publication_date",touchedMeal.getPublication_date());
-                intent.putExtra("isAvailable",touchedMeal.isAvailable());
+                //intent.putExtra("price",touchedMeal.getPrice());
+                //intent.putExtra("publication_date",touchedMeal.getPublication_date());
+                //intent.putExtra("isAvailable",touchedMeal.isAvailable());
                 //intent.putExtra("user",touchedMeal.getUser());
                 //intent.putExtra("category",touchedMeal.getCategory());
                 fragment.getActivity().startActivity(intent);
@@ -128,13 +124,15 @@ public class MealRecycleViewFragment extends Fragment {
             Meal meal = meals.get(position);
             String name  = meal.getName();
             String description = meal.getDescription();
-            /*Float price = meal.getPrice();
-            String publication_date = meal.getPublication_date();
-            User user = meal.getUser();
-            Category category = meal.getCategory();*/
+            //Float price = meal.getPrice();
+            //String publication_date = meal.getPublication_date();
+            //User user = meal.getUser();
+            //Category category = meal.getCategory();
+
 
             holder.mealName.setText(name);
             holder.description.setText(description);
+
 
         }
 

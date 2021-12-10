@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.LoginUser;
 import com.example.ig3_smartcity_android.model.Token;
+import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService;
 import com.example.ig3_smartcity_android.ui.fragment.MealRecycleViewFragment;
 import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel;
+
+import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginUserViewModel loginUserViewModel;
     private boolean areAllFieldsChecked = false;
     private SharedPreferences sharedPreferences;
+    private Token token;
 
 
     private ProgressBar progressBar; //sera utilisé(ou pas) pour mettre l'icone de chargement de connexion lorsqu'on se connecte.
@@ -37,8 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setTitle(R.string.connexion);
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
 
         usernameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
@@ -55,10 +60,13 @@ public class LoginActivity extends AppCompatActivity {
                 areAllFieldsChecked = areFiledsNotEmpty();
                 if(areAllFieldsChecked){
                     login();
+                    goToMainActivity();
                 }
             }
+
         });
 
+       // loginUserViewModel.getJwt().observe();
 
         switchToRegisterActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,10 +78,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void preferencesSaved(Token token){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getString(R.string.username_token),token.getUsername());
+        //editor.putString(getString(R.string.username_token),token.getUsername());
         editor.putString(getString(R.string.token),token.getToken());
-        editor.putInt(getString(R.string.user_id_token), token.getUserId());
-        editor.commit();
+        //editor.putInt(getString(R.string.user_id_token), token.getUserId());
+        editor.apply();
     }
     /**
      *
