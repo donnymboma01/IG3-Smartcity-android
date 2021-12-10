@@ -31,21 +31,11 @@ public class MealDescription extends AppCompatActivity {
         mealName = (TextView) findViewById(R.id.mealName);
         description =(TextView) findViewById(R.id.description);
         portion_number =(TextView) findViewById(R.id.portion_number_id);
-        //price =(TextView) findViewById(R.id.price);
-        //publication_date =(TextView) findViewById(R.id.publication_date);
-        //isAvailable =(TextView) findViewById(R.id.isAvailable);
-        //user =(TextView) findViewById(R.id.user);
-        //category =(TextView) findViewById(R.id.category);
 
         setText(mealName,intent.getStringExtra("name"));
         setText(description,intent.getStringExtra("description"));
         setText(portion_number,intent.getStringExtra("portion_number"));
         Glide.with(getApplicationContext()).load(intent.getStringExtra("image")).into(mealImage);
-        //setText(price,intent.getStringExtra("price "));
-        //setText(publication_date,intent.getStringExtra("publication_date"));
-        //setText(isAvailable,intent.getStringExtra("isAvailable"));
-        //setText(user,intent.getStringExtra("user"));
-        //setText(category,intent.getStringExtra("category"));
     }
 
     @Override

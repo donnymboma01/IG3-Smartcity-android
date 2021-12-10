@@ -73,5 +73,7 @@
     <string name="nom_repas">Nom du repas :</string>
     <string name="header_text">Liste des repas</string>
     <string name="portion_number">Quantité</string>
+    <string name="datePublication">Date de publication :</string>
+    <string name="reclamer">réclamer</string>
 
 </resources>

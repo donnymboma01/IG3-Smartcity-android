@@ -119,11 +119,6 @@ public class MealRecycleViewFragment extends Fragment {
                 intent.putExtra("description",touchedMeal.getDescription());
                 intent.putExtra("image",touchedMeal.getImage());
                 intent.putExtra("portion_number",touchedMeal.getPortion_number());
-                //TODO : voir comment afficher  la date de publication,isAvailable, user et la catégorie.
-                //intent.putExtra("publication_date",touchedMeal.getPublication_date());
-                //intent.putExtra("isAvailable",touchedMeal.isAvailable());
-                //intent.putExtra("user",touchedMeal.getUser());
-                //intent.putExtra("category",touchedMeal.getCategory());
                 fragment.getActivity().startActivity(intent);
             });
             return vh;
@@ -146,7 +141,7 @@ public class MealRecycleViewFragment extends Fragment {
             holder.description.setText(description);
             holder.portion_number.setText("Quantité : "+portionNumber.toString());
 
-            Glide.with(context)
+            Glide.with(fragment)
                     .load(mealUri)
                     .placeholder(R.drawable.bicky)
                     .into(holder.image);

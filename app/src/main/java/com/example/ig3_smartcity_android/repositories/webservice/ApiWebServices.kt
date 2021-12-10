@@ -10,13 +10,13 @@ import retrofit2.http.*
 interface ApiWebServices {
 
     //permet de se connecter -->OK
-    @POST("v1/user/login")
+    @POST("V1/user/login")
     fun userLogin(@Body loginUserDTO: LoginUserDTO) : Call<String>
 
 
     //permet d'inscrire un utilisateur. -->Token String
     // il fallait userDTO soit de type UserDTO et non LoginUserDTO-->fixed.
-    @POST("v1/user")
+    @POST("V1/user")
     fun registerUser(@Body userDTO: UserDTO) : Call<String>
 
     //récupère un repas par son id --> pas vraiment besoin pour ce projet
@@ -27,6 +27,6 @@ interface ApiWebServices {
     //fun getMealById(@Path("id") mealId :Int ,@Header("Authorization") authHeader: String) :Call<MealDTO>
 
     //récupère tous les repas. -->OK
-    @GET("v1/meal")
+    @GET("V1/meal")
     fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
 }

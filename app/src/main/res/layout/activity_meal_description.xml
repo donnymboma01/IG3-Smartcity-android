@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066"
         android:src="@drawable/bicky"
+        android:layout_gravity="center"
          />
 
     <TextView
@@ -35,7 +36,8 @@
         app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36"/>
+        app:layout_constraintVertical_bias="0.36"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/description"
@@ -48,6 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.359"
+        android:layout_gravity="center"
          />
 
     <TextView
@@ -60,48 +63,36 @@
         app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442"/>
+        app:layout_constraintVertical_bias="0.442"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/publication_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        />
-
-    <TextView
-        android:id="@+id/isAvailable"
-        android:layout_width="44dp"
-        android:layout_height="32dp"
-        android:text="@string/disponible"
+        android:text="@string/datePublication"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.757"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45" />
+        app:layout_constraintVertical_bias="0.45"
+        android:layout_gravity="center"
+        />
 
-    <TextView
-        android:id="@+id/user"
+
+    <Button
+        android:id="@+id/reclamerID"
+        android:text="@string/reclamer"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/utilisateur"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintTop_toBottomOf="@+id/publication_date"
+        android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/categorie"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.73"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541"/>
+
 </LinearLayout>
