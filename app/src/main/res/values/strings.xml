@@ -58,7 +58,7 @@
     <string name="expDate">expDate</string>
 
 
-    <!-- Strings related to login -->
+    <!-- other Strings -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -80,8 +80,21 @@
     <string name="categorie_repas">catégorie</string>
     <string name="nombre_portion">nombre de portions</string>
     <string name="donation">Donation</string>
+    <string name="cart">Panier</string>
     <string name="donner">DONNER</string>
     <string name="take_a_picture">Prendre une photo</string>
     <string name="take_picture_message">appuyez sur le bouton pour prendre une photo du repas</string>
+    <string name="navigation_open">Open navigation drawer</string>
+    <string name="navigation_close">Close navigation drawer</string>
+
+    <!--Meals Categories-->
+    <string-array name="meals_categories">
+        <item>Burger</item>
+        <item>Pizza</item>
+        <item>Sushi</item>
+        <item>Plat Espagnol</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

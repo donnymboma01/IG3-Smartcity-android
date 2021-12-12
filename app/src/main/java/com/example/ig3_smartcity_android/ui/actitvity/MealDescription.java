@@ -24,7 +24,6 @@ public class MealDescription extends AppCompatActivity {
 
         //affiche l'option retour vers la liste(recycleView)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.repas_position);
         this.intent = getIntent();
 
         mealImage = (ImageView)findViewById(R.id.mealImageId);
