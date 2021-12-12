@@ -54,4 +54,6 @@ public class MealDescription extends AppCompatActivity {
     public void setText(TextView view,String text){
         view.setText(text);
     }
+
+
 }

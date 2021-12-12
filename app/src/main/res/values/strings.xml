@@ -44,7 +44,6 @@
     <string name="user_exists">Cet utilisateur existe deja</string>
 
 
-
     <!--Welcome message-->
     <string name="welcome_message">Bienvenues à l\'application de donation de nourriture <b></b></string>
     <string name="register_page_message">inscription</string>
@@ -75,5 +74,14 @@
     <string name="portion_number">Quantité</string>
     <string name="datePublication">Date de publication :</string>
     <string name="reclamer">réclamer</string>
+    <string name="meal_clicked">Plat selectionné</string>
+    <string name="nomReaps">nom du repas</string>
+    <string name="description_repas">déscription</string>
+    <string name="categorie_repas">catégorie</string>
+    <string name="nombre_portion">nombre de portions</string>
+    <string name="donation">Donation</string>
+    <string name="donner">DONNER</string>
+    <string name="take_a_picture">Prendre une photo</string>
+    <string name="take_picture_message">appuyez sur le bouton pour prendre une photo du repas</string>
 
 </resources>

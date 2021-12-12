@@ -26,6 +26,9 @@ import com.example.ig3_smartcity_android.model.User;
 import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.viewModel.MealViewModel;
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +85,6 @@ public class MealRecycleViewFragment extends Fragment {
         TextView description;
         TextView portion_number;
 
-
         public MealViewHolder(@NonNull View itemView, OnItemSelectedListener listener) {
             super(itemView);
             image = itemView.findViewById(R.id.mealImageId);
@@ -132,14 +134,11 @@ public class MealRecycleViewFragment extends Fragment {
             String mealImage = meal.getImage();
             Uri mealUri = Uri.parse(mealImage);
             Integer portionNumber = meal.getPortion_number();
-            //String publication_date = meal.getPublication_date();
-            //User user = meal.getUser();
-            //Category category = meal.getCategory();
-
 
             holder.mealName.setText(name);
             holder.description.setText(description);
             holder.portion_number.setText("Quantité : "+portionNumber.toString());
+
 
             Glide.with(fragment)
                     .load(mealUri)

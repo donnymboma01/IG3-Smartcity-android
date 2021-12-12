@@ -15,9 +15,11 @@
         android:theme="@style/Theme.IG3Smartcityandroid"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.actitvity.Donation"
+            android:exported="false" />
+        <activity
             android:name=".ui.actitvity.MealDescription"
             android:exported="false" />
-
         <activity
             android:name=".ui.actitvity.SplashActivity"
             android:exported="true"
@@ -27,27 +29,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
         <activity
             android:name=".ui.actitvity.LoginActivity"
-            android:exported="false"
-            />
-
+            android:exported="false" />
         <activity
             android:name=".ui.actitvity.RegistrationActivity"
-            android:exported="false"
-            />
-
+            android:exported="false" />
         <activity
             android:name=".ui.actitvity.MainActivity"
             android:exported="false" />
-
-
-
-
     </application>
 
 </manifest>
