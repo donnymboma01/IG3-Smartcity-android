@@ -96,6 +96,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
         <Button
             android:id="@+id/takePictureId"
             android:layout_width="wrap_content"
