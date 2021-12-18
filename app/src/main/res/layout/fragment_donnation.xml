@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.DonnationFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +109,8 @@
             android:id="@+id/takePictureId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/nbPortionsID"
 
             android:layout_gravity="center"
@@ -117,10 +126,11 @@
         <Button
             android:id="@+id/donnationID"
             android:text="@string/donner"
-            style="@style/Widget.AppCompat.Button.Colored"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="156dp"
+            android:layout_marginTop="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -130,5 +140,6 @@
 
 
     </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

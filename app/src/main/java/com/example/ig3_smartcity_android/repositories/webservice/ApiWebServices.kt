@@ -14,8 +14,7 @@ interface ApiWebServices {
     fun userLogin(@Body loginUserDTO: LoginUserDTO) : Call<String>
 
 
-    //permet d'inscrire un utilisateur. -->Token String
-    // il fallait userDTO soit de type UserDTO et non LoginUserDTO-->fixed.
+    //permet d'inscrire un utilisateur. -->Token String ->OK
     @POST("V1/user")
     fun registerUser(@Body userDTO: UserDTO) : Call<String>
 
@@ -23,10 +22,10 @@ interface ApiWebServices {
     @GET("/v1/meal/{id}")
     fun getMealById(@Path("id") mealId :Int ) :Call<MealDTO>
 
-    //@GET("/v1/meal/{id}")
-    //fun getMealById(@Path("id") mealId :Int ,@Header("Authorization") authHeader: String) :Call<MealDTO>
-
     //récupère tous les repas. -->OK
     @GET("V1/meal")
     fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
+
+    //Ajout d'un repas.
+    fun addMeal(@Body mealDTO: MealDTO):Call<String>
 }

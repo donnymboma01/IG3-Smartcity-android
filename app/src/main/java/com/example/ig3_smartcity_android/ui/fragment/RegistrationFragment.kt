@@ -11,8 +11,6 @@ import com.example.ig3_smartcity_android.databinding.FragmentRegistrationBinding
 
 class RegistrationFragment : Fragment() {
 
-    lateinit var binding: FragmentRegistrationBinding
-
 
 
     override fun onCreateView(

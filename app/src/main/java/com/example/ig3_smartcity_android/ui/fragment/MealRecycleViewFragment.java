@@ -16,20 +16,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.example.ig3_smartcity_android.R;
-import com.example.ig3_smartcity_android.model.Category;
 import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.model.Token;
 import com.example.ig3_smartcity_android.model.User;
 import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.viewModel.MealViewModel;
 import org.jetbrains.annotations.NotNull;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
@@ -49,7 +43,7 @@ public class MealRecycleViewFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater,@NotNull ViewGroup container,@NotNull
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_meal_recycle_view,container,false);
         RecyclerView mealRecycleView = root.findViewById(R.id.mealRecyclerView);
@@ -140,6 +134,7 @@ public class MealRecycleViewFragment extends Fragment {
             holder.portion_number.setText("Quantité : "+portionNumber.toString());
 
 
+            //placeholder(R.drawable.bicky) -> image par defaut si jamais les images de l'api ne veulent pas charger.
             Glide.with(fragment)
                     .load(mealUri)
                     .placeholder(R.drawable.bicky)
