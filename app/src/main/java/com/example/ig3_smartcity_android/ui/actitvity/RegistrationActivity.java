@@ -64,11 +64,18 @@ public class RegistrationActivity extends AppCompatActivity {
                 areAllFieldsChecked = isFormValid();
                 if(areAllFieldsChecked){
                     registerUser();
+                    resetFormAfterRegister();
                 }
             }
         });
 
     }
+
+    /**
+     * allows to have an icon so that we can move back to the previous activity
+     * @param item
+     * @return
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -84,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Checks if all fields have values
      * @return true if all fields are filled and false otherwise.
      */
 
@@ -125,7 +132,25 @@ public class RegistrationActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * this method allows to reset the form after a new user has been registered.
+     */
+    public void resetFormAfterRegister(){
+        firstnameEditText.getText().clear();
+        nameEditText.getText().clear();
+        pseudoEditText.getText().clear();
+        passwordEditText.getText().clear();
+        provinceEditText.getText().clear();
+        cityEditText.getText().clear();
+        cityEditText.getText().clear();
+        telephoneText.getText().clear();
+        addressEditText.getText().clear();
+    }
 
+
+    /**
+     * this method allows to register a new user to the database.
+     */
     public void registerUser(){
         User user = new User(
                 firstnameEditText.getText().toString(),

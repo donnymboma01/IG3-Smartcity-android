@@ -72,7 +72,7 @@ public class DonnationFragment extends Fragment {
 
         return root;
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
@@ -82,7 +82,6 @@ public class DonnationFragment extends Fragment {
             imageView.setImageBitmap(imageCaptured);
         }
     }
-
 
 
     private boolean isFormValid(){

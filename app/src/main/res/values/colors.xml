@@ -10,4 +10,7 @@
     <color name="brown">#A52A2A</color>
     <color name="gray">#808080</color>
     <color name="light_gray">#DCDCDC</color>
+
+    <color name="colorPrimary">#306B34</color>
+    <color name="colorSecondary">#FF6663</color>
 </resources>
