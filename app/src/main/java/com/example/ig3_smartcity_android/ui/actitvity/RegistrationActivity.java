@@ -1,6 +1,7 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.ig3_smartcity_android.R;
+import com.example.ig3_smartcity_android.model.User;
+import com.example.ig3_smartcity_android.ui.viewModel.RegistrationViewModel;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -23,10 +26,13 @@ public class RegistrationActivity extends AppCompatActivity {
             passwordEditText,
             provinceEditText,
             cityEditText,
-            addressEditText;
+            addressEditText,
+            telephoneText;
+
     Button buttonRegister, switchBackToLogin;
     private boolean areAllFieldsChecked = false;
     private SharedPreferences sharedPreferences;
+    private RegistrationViewModel registrationViewModel;
 
     private ProgressBar progressBar;
 
@@ -39,6 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //pour afficher le bouton retour vers l'activité login.
         getSupportActionBar().setTitle(R.string.inscription);
+        registrationViewModel = new ViewModelProvider(this).get(RegistrationViewModel.class);
 
         firstnameEditText = findViewById(R.id.prenom);
         nameEditText = findViewById(R.id.nom);
@@ -48,6 +55,18 @@ public class RegistrationActivity extends AppCompatActivity {
         cityEditText = findViewById(R.id.city);
         addressEditText = findViewById(R.id.adresse);
         buttonRegister = findViewById(R.id.registrationBtnID);
+        telephoneText = findViewById(R.id.telephone);
+
+        //l'utilisateur n'est enregistré que si tous les champs du formulaire sont remplis.
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                areAllFieldsChecked = isFormValid();
+                if(areAllFieldsChecked){
+                    registerUser();
+                }
+            }
+        });
 
     }
 
@@ -99,8 +118,27 @@ public class RegistrationActivity extends AppCompatActivity {
             addressEditText.setError(getResources().getText(R.string.address_empty_error));
             return false;
         }
+        if(telephoneText.length() == 0){
+            telephoneText.setError(getResources().getText(R.string.phone_error));
+            return false;
+        }
         return true;
     }
 
+
+    public void registerUser(){
+        User user = new User(
+                firstnameEditText.getText().toString(),
+                nameEditText.getText().toString(),
+                telephoneText.getText().toString(),
+                pseudoEditText.getText().toString(),
+                passwordEditText.getText().toString(),
+                provinceEditText.getText().toString(),
+                cityEditText.getText().toString(),
+                addressEditText.getText().toString()
+
+        );
+        registrationViewModel.registerUser(user);
+    }
 
 }
