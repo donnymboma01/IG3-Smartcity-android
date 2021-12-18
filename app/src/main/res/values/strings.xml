@@ -48,6 +48,7 @@
     <string name="meal_categorie_error">catégorie obligatoire</string>
     <string name="nbPortions_error">la portion est obligatoire</string>
     <string name="meal_description_error">description obligatoire</string>
+    <string name="camera_error">cette action est impossible</string>
 
 
     <!--Welcome message-->

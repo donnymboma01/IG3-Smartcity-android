@@ -104,6 +104,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:srcCompat="@tools:sample/avatars"
+            android:id="@+id/image_view_id"/>
 
         <Button
             android:id="@+id/takePictureId"
@@ -112,7 +118,6 @@
             android:backgroundTint="@color/purple_500"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/nbPortionsID"
-
             android:layout_gravity="center"
             android:layout_marginTop="36dp"
             app:layout_constraintEnd_toEndOf="parent"
