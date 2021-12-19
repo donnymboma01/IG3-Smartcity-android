@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.ig3_smartcity_android.R;
+import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService;
 
 public class MealDescription extends AppCompatActivity {
 
@@ -33,8 +34,8 @@ public class MealDescription extends AppCompatActivity {
 
         setText(mealName,intent.getStringExtra("name"));
         setText(description,intent.getStringExtra("description"));
-        setText(portion_number,intent.getStringExtra("portion_number"));
-        Glide.with(getApplicationContext()).load(intent.getStringExtra("image")).into(mealImage);
+        setText(portion_number,String.valueOf(intent.getIntExtra("portion_number",0)));
+        Glide.with(getApplicationContext()).load(RetrofitConfigurationService.BASE_URL + "mealimages/" + intent.getStringExtra("image")).into(mealImage);
     }
 
     @Override

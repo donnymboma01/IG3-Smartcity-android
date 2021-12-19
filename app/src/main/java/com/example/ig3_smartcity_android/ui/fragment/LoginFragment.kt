@@ -23,9 +23,9 @@ import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel
 
 class LoginFragment : Fragment() {
 
-    lateinit var usernameText : EditText
-    lateinit var passwordText: EditText
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var usernameText : EditText
+    private lateinit var passwordText: EditText
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentLoginBinding
     private lateinit var loginUserViewModel: LoginUserViewModel
     private var areAllFieldsChecked :Boolean = false
