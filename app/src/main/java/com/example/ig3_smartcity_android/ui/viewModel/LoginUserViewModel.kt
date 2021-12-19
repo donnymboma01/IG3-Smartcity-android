@@ -32,7 +32,7 @@ class LoginUserViewModel(application: Application) : AndroidViewModel(applicatio
         apiWebServices.userLogin(userLoginMapper.mapToLoginUserDTO(loginUser)).enqueue(object :retrofit2.Callback<String>{
             override  fun onResponse(call : Call<String>,response : Response<String>){
                 if(response.isSuccessful){
-                    //_error.value = NetworkError.NO_CONNECTION_ERROR
+                    _error.value = NetworkError.NO_ERROR_DETECTED
                     _jwt.value = tokenMapper.mapToToken(response.body()!!)
 
                 }else{

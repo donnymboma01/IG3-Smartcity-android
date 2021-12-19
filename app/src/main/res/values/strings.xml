@@ -20,6 +20,7 @@
     <string name="bonjour">Bonjour </string>
     <string name="liste_repas">Liste de repas</string>
     <string name="repas_position">Repas selectionné</string>
+    <string name="registration_message">inscription réussie !</string>
 
 
     <!--Errors-->
@@ -49,6 +50,8 @@
     <string name="nbPortions_error">la portion est obligatoire</string>
     <string name="meal_description_error">description obligatoire</string>
     <string name="camera_error">cette action est impossible</string>
+
+    <string name="credentials_problem">pseudo ou mot de passe incorrect !</string>
 
 
     <!--Welcome message-->
@@ -93,6 +96,7 @@
     <string name="take_picture_message">appuyez sur le bouton pour prendre une photo du repas</string>
     <string name="navigation_open">Open navigation drawer</string>
     <string name="navigation_close">Close navigation drawer</string>
+    <string name="connecting">connexion...</string>
 
     <!--Meals Categories-->
     <string-array name="meals_categories">
@@ -101,7 +105,7 @@
         <item>Sushi</item>
         <item>Plat Espagnol</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="arnaud_donny"><![CDATA[made by Arnaud Berg & Donny Mboma]]></string>
     <string name="login_sucess">Connecté !</string>

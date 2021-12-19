@@ -13,8 +13,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.ig3_smartcity_android.R;
+import com.example.ig3_smartcity_android.model.NetworkError;
 import com.example.ig3_smartcity_android.model.User;
 import com.example.ig3_smartcity_android.ui.viewModel.RegistrationViewModel;
 
@@ -33,8 +35,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private boolean areAllFieldsChecked = false;
     private SharedPreferences sharedPreferences;
     private RegistrationViewModel registrationViewModel;
+    private boolean isUserRegistred = false;
 
-    private ProgressBar progressBar;
+
 
 
     @Override
@@ -66,6 +69,13 @@ public class RegistrationActivity extends AppCompatActivity {
                     registerUser();
                     resetFormAfterRegister();
                 }
+            }
+        });
+
+        registrationViewModel.getError().observe(this,networkError -> {
+            showError(networkError);
+            if(isUserRegistred){
+                Toast.makeText(this,R.string.registration_message,Toast.LENGTH_LONG).show();
             }
         });
 
@@ -145,6 +155,25 @@ public class RegistrationActivity extends AppCompatActivity {
         cityEditText.getText().clear();
         telephoneText.getText().clear();
         addressEditText.getText().clear();
+    }
+
+    public void showError(NetworkError networkError){
+        switch (networkError){
+            case NO_CONNECTION_ERROR:
+                Toast.makeText(this,R.string.connection_error,Toast.LENGTH_LONG).show();
+                break;
+            case TECHNICAL_ERROR:
+                Toast.makeText(this,R.string.technical_error,Toast.LENGTH_LONG).show();
+                break;
+            case USER_ALREADY_EXIST:
+                Toast.makeText(this,R.string.user_exists,Toast.LENGTH_LONG).show();
+                break;
+            case REQUEST_ERROR:
+                Toast.makeText(this,R.string.request_error,Toast.LENGTH_LONG).show();
+                break;
+            default:
+                isUserRegistred = true;
+        }
     }
 
 

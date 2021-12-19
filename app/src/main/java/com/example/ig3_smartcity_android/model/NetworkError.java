@@ -7,7 +7,8 @@ public enum NetworkError {
     REQUEST_ERROR(R.string.request_error),
     TECHNICAL_ERROR(R.string.technical_error),
     NO_ERROR_DETECTED(R.string.no_error_detected),
-    USER_ALREADY_EXIST(R.string.user_exists);
+    USER_ALREADY_EXIST(R.string.user_exists),
+    BAD_CREDENTIALS_ERROR(R.string.credentials_problem);
 
     private int errorMessage;
 

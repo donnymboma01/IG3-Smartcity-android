@@ -3,6 +3,7 @@ package com.example.ig3_smartcity_android.ui.actitvity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     private Token token;
 
 
-    private ProgressBar progressBar; //sera utilisé(ou pas) pour mettre l'icone de chargement de connexion lorsqu'on se connecte.
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         usernameText = findViewById(R.id.username);
         passwordText = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.loginButtonID);
-        progressBar = findViewById(R.id.loadingId);
         loginUserViewModel = new  ViewModelProvider(this).get(LoginUserViewModel.class);
         switchToRegisterActivity = findViewById(R.id.signupID);
 
