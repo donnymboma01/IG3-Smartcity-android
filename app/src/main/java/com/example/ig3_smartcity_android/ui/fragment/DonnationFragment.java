@@ -1,6 +1,7 @@
 package com.example.ig3_smartcity_android.ui.fragment;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import com.example.ig3_smartcity_android.ui.viewModel.DonnationViewModel;
 
 
 public class DonnationFragment extends Fragment {
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private EditText nameMealText;
     private EditText descriptionText;
@@ -52,9 +54,9 @@ public class DonnationFragment extends Fragment {
         // Inflate the layout for this fragment
         donnationViewModel = new ViewModelProvider(this).get(DonnationViewModel.class);
         binding = FragmentDonnationBinding.inflate(inflater,container,false);
-        binding.getViewModel();
-        binding.getLifecycleOwner();
-        /*View root  = inflater.inflate(R.layout.fragment_donnation,container,false);
+        //binding.getViewModel();
+        //binding.getLifecycleOwner();
+        View root  = inflater.inflate(R.layout.fragment_donnation,container,false);
         nameMealText = root.findViewById(R.id.nom);
         descriptionText = root.findViewById(R.id.descriptionID);
         categorieText = root.findViewById(R.id.categorie);
@@ -72,23 +74,25 @@ public class DonnationFragment extends Fragment {
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent,100);
-                }else{
+                Context context = getActivity();
+                PackageManager packageManager = context == null ? null : context.getPackageManager();
+                if (packageManager == null || !packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
                     Toast.makeText(getContext(),getResources().getText(R.string.camera_error),Toast.LENGTH_LONG).show();
+                } else {
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
         });
 
-        return root;*/
-        return binding.getRoot();
+        return root;
+        //return binding.getRoot();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == 100 ){
+        if(requestCode == REQUEST_IMAGE_CAPTURE ){
             Bundle bundle = data.getExtras();
             Bitmap imageCaptured = (Bitmap) bundle.get("data");
             imageView.setImageBitmap(imageCaptured);

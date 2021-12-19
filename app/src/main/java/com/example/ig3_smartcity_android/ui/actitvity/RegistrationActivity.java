@@ -31,13 +31,11 @@ public class RegistrationActivity extends AppCompatActivity {
             addressEditText,
             telephoneText;
 
-    Button buttonRegister;
+    private Button buttonRegister;
     private boolean areAllFieldsChecked = false;
     private SharedPreferences sharedPreferences;
     private RegistrationViewModel registrationViewModel;
     private boolean isUserRegistred = false;
-
-
 
 
     @Override

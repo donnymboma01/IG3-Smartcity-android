@@ -21,6 +21,7 @@ import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.model.Token;
 import com.example.ig3_smartcity_android.model.User;
+import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService;
 import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.viewModel.MealViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -136,8 +137,7 @@ public class MealRecycleViewFragment extends Fragment {
 
             //placeholder(R.drawable.bicky) -> image par defaut si jamais les images de l'api ne veulent pas charger.
             Glide.with(fragment)
-                    .load(mealUri)
-                    .placeholder(R.drawable.bicky)
+                    .load(RetrofitConfigurationService.BASE_URL + "mealimages/" + mealUri)
                     .into(holder.image);
         }
 
