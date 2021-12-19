@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         Animation fadeOut = new AlphaAnimation(1,0);
-        //fadeOut.getInterpolator(new AccelerateInterpolator());
+        //fadeOut.getInterpolator(new AccelerateInterpolator()); -->cette facon ne marche plus en Android.
         fadeOut.setStartOffset(500);
         fadeOut.setDuration(1800);
         ImageView imageView = findViewById(R.id.imageSplash);

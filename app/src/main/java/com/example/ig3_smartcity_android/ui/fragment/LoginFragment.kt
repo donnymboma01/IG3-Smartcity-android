@@ -11,15 +11,14 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import com.example.ig3_smartcity_android.R
 import com.example.ig3_smartcity_android.databinding.FragmentLoginBinding
 import com.example.ig3_smartcity_android.model.LoginUser
 import com.example.ig3_smartcity_android.model.NetworkError
 import com.example.ig3_smartcity_android.model.Token
 import com.example.ig3_smartcity_android.ui.actitvity.MainActivity
+import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity
 import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel
-import java.lang.Error
 
 
 class LoginFragment : Fragment() {
@@ -29,7 +28,7 @@ class LoginFragment : Fragment() {
     lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: FragmentLoginBinding
     private lateinit var loginUserViewModel: LoginUserViewModel
-
+    private var areAllFieldsChecked :Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +37,7 @@ class LoginFragment : Fragment() {
         // Inflate the layout for this fragment
 
        loginUserViewModel = ViewModelProvider(this).get(LoginUserViewModel::class.java)
-        binding = FragmentLoginBinding.inflate(inflater,container,false) // il manquait la dépendence dataBinding = true dans gradle
+        binding = FragmentLoginBinding.inflate(inflater,container,false)
         binding.viewModel = loginUserViewModel
         binding.lifecycleOwner = this
 
@@ -51,7 +50,13 @@ class LoginFragment : Fragment() {
                 error : NetworkError -> this.showError(error)
         }
         binding.loginButtonID.setOnClickListener{
-            loginUser()
+            areAllFieldsChecked = areFiledsNotEmpty()
+            if(areAllFieldsChecked){
+                loginUser()
+            }
+        }
+        binding.signupID.setOnClickListener{
+            goToRegisterActivity()
         }
 
         loginUserViewModel.jwt.observe(viewLifecycleOwner){
@@ -75,9 +80,21 @@ class LoginFragment : Fragment() {
             NetworkError.REQUEST_ERROR ->Toast.makeText(activity,R.string.request_error,Toast.LENGTH_LONG).show()
             NetworkError.BAD_CREDENTIALS_ERROR ->Toast.makeText(activity,R.string.credentials_problem,Toast.LENGTH_LONG).show()
             else ->{
-
+                NetworkError.NO_ERROR_DETECTED
             }
         }
+    }
+
+    fun areFiledsNotEmpty(): Boolean {
+        if (usernameText!!.length() == 0) {
+            usernameText!!.error = resources.getText(R.string.username_empty_message)
+            return false
+        }
+        if (passwordText!!.length() == 0) {
+            passwordText!!.error = resources.getText(R.string.password_empty_message)
+            return false
+        }
+        return true
     }
 
     private fun goToMainActivity(){
@@ -85,6 +102,14 @@ class LoginFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun goToRegisterActivity(){
+        var intent :Intent = Intent(requireActivity().applicationContext,RegistrationActivity::class.java)
+        startActivity(intent)
+    }
+
+    /**
+     * calls the loginUserViewModel to log in the user.
+     */
     private fun loginUser(){
         var login = LoginUser(
             usernameText.text.toString(),

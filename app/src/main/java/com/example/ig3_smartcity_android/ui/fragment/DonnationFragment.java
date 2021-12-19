@@ -100,8 +100,4 @@ public class DonnationFragment extends Fragment {
         return true;
     }
 
-    public void goToRegisterActivity(){
-        Intent switchToRegister = new Intent(getContext(), RegistrationActivity.class);
-        startActivity(switchToRegister);
-    }
 }

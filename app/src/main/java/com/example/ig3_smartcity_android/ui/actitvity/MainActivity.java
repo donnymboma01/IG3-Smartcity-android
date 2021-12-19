@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     * cette fonction permet de naviguer entre les differents fragments
+     * cette fonction permet de naviguer entre les differents fragments .
      * @param item
      * @return
      */

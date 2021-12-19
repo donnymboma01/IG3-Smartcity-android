@@ -31,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
             addressEditText,
             telephoneText;
 
-    Button buttonRegister, switchBackToLogin;
+    Button buttonRegister;
     private boolean areAllFieldsChecked = false;
     private SharedPreferences sharedPreferences;
     private RegistrationViewModel registrationViewModel;
