@@ -157,6 +157,10 @@ public class RegistrationActivity extends AppCompatActivity {
         addressEditText.getText().clear();
     }
 
+    /**
+     * Cette méthode retourne une erreur réseau selon le cas.
+     * @param networkError
+     */
     public void showError(NetworkError networkError){
         switch (networkError){
             case NO_CONNECTION_ERROR:
