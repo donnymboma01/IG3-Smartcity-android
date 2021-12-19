@@ -29,7 +29,7 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if(response.isSuccessful){
                     _error.value = NetworkError.NO_ERROR_DETECTED
-                    System.out.println(response.body());
+                    println(response.body());
                 }else{
                     if(response.code()==409){
                         _error.value = NetworkError.USER_ALREADY_EXIST
@@ -44,7 +44,7 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
                     _error.value = NetworkError.TECHNICAL_ERROR
-                    System.out.println(t);
+                    println(t);
                 }
             }
         })

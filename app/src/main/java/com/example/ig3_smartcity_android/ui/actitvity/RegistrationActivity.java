@@ -176,6 +176,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 Toast.makeText(this,R.string.request_error,Toast.LENGTH_LONG).show();
                 break;
             default:
+                Toast.makeText(this,R.string.registration_message,Toast.LENGTH_LONG).show();
                 isUserRegistred = true;
         }
     }

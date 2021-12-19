@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ig3_smartcity_android.R;
+import com.example.ig3_smartcity_android.databinding.FragmentDonnationBinding;
+import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity;
+import com.example.ig3_smartcity_android.ui.viewModel.DonnationViewModel;
 
 
 public class DonnationFragment extends Fragment {
@@ -31,6 +36,8 @@ public class DonnationFragment extends Fragment {
     private Button takePictureButton;
     private Button addMealButton;
     private ImageView imageView;
+    private DonnationViewModel donnationViewModel;
+    private FragmentDonnationBinding binding;
 
     private boolean areAllFiledsChecked = false;
 
@@ -43,7 +50,11 @@ public class DonnationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root  = inflater.inflate(R.layout.fragment_donnation,container,false);
+        donnationViewModel = new ViewModelProvider(this).get(DonnationViewModel.class);
+        binding = FragmentDonnationBinding.inflate(inflater,container,false);
+        binding.getViewModel();
+        binding.getLifecycleOwner();
+        /*View root  = inflater.inflate(R.layout.fragment_donnation,container,false);
         nameMealText = root.findViewById(R.id.nom);
         descriptionText = root.findViewById(R.id.descriptionID);
         categorieText = root.findViewById(R.id.categorie);
@@ -70,7 +81,8 @@ public class DonnationFragment extends Fragment {
             }
         });
 
-        return root;
+        return root;*/
+        return binding.getRoot();
     }
 
     @Override
@@ -98,6 +110,14 @@ public class DonnationFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    public void addMeal(){
+        String portion = nbPortionText.getText().toString();
+        Integer nbPortion = Integer.parseInt(portion);
+        Meal meal = new Meal(nameMealText.getText().toString(),descriptionText.getText().toString(),imageView.toString(),nbPortion);
+        donnationViewModel.addNewMeal(meal);
+
     }
 
 }
