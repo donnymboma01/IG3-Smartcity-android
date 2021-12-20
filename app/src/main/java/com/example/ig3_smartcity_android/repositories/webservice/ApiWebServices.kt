@@ -27,5 +27,6 @@ interface ApiWebServices {
     fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
 
     //Ajout d'un repas.
-    fun addMeal(@Body mealDTO: MealDTO):Call<String>
+    @POST("V1/meal")
+    fun addMeal(@Body mealDTO: MealDTO, @Header("Authorization") authHeader: String):Call<String>
 }

@@ -27,6 +27,7 @@ public class RetrofitConfigurationService {
                 .addInterceptor(new ConnectivityCheckInterceptor(context))
                 .build();
 
+
         Moshi moshiConverter = new Moshi.Builder()
                 .add(new KotlinJsonAdapterFactory())
                 .build();

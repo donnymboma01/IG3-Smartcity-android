@@ -3,8 +3,10 @@ package com.example.ig3_smartcity_android.ui.fragment;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -24,8 +26,11 @@ import android.widget.Toast;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.databinding.FragmentDonnationBinding;
 import com.example.ig3_smartcity_android.model.Meal;
+import com.example.ig3_smartcity_android.model.Token;
 import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity;
 import com.example.ig3_smartcity_android.ui.viewModel.DonnationViewModel;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class DonnationFragment extends Fragment {
@@ -40,6 +45,8 @@ public class DonnationFragment extends Fragment {
     private ImageView imageView;
     private DonnationViewModel donnationViewModel;
     private FragmentDonnationBinding binding;
+    private SharedPreferences sharedPreferences;
+    private Token jwtToken;
 
     private boolean areAllFiledsChecked = false;
 
@@ -65,6 +72,12 @@ public class DonnationFragment extends Fragment {
         addMealButton = root.findViewById(R.id.donnationID);
         takePictureButton = root.findViewById(R.id.takePictureId);
 
+        //gestion du token pour l'ajout du repas.
+        sharedPreferences = requireActivity().getSharedPreferences("sharedPref",Context.MODE_PRIVATE);
+        //récuperation du token généré à la connexion et stocké dans le sharedPreference.
+        String token = sharedPreferences.getString(getString(R.string.token),"");
+        jwtToken = new Token(token);
+
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{
                     Manifest.permission.CAMERA
@@ -85,8 +98,18 @@ public class DonnationFragment extends Fragment {
             }
         });
 
+        addMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                areAllFiledsChecked = isFormValid();
+                if(areAllFiledsChecked){
+                    addMeal();
+                    //Toast.makeText(getContext(),"Bonjour ce bouton marche",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         return root;
-        //return binding.getRoot();
     }
 
     @Override
@@ -118,9 +141,21 @@ public class DonnationFragment extends Fragment {
 
     public void addMeal(){
         String portion = nbPortionText.getText().toString();
+        String name = nameMealText.getText().toString();
+        String description = descriptionText.getText().toString();
         Integer nbPortion = Integer.parseInt(portion);
-        Meal meal = new Meal(nameMealText.getText().toString(),descriptionText.getText().toString(),imageView.toString(),nbPortion);
-        donnationViewModel.addNewMeal(meal);
+        String image = imageView.toString();
+       /* Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageInByte = baos.toByteArray();
+        Integer nbPortion = Integer.parseInt(portion);
+        String categorie = categorieText.getText().toString();
+        Integer categorie_fk = Integer.parseInt(categorie);*/
+
+
+        Meal meal = new Meal(name,description,image,nbPortion);
+        donnationViewModel.addNewMeal(meal,jwtToken);
 
     }
 
