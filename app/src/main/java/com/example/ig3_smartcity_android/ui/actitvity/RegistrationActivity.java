@@ -72,18 +72,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
         registrationViewModel.getError().observe(this,networkError -> {
             showError(networkError);
-            if(isUserRegistred){
+            if(!isUserRegistred){
                 Toast.makeText(this,R.string.registration_message,Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    /**
-     * allows to have an icon so that we can move back to the previous activity
-     * @param item
-     * @return
-     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
@@ -97,11 +92,6 @@ public class RegistrationActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         return true;
     }
-
-    /**
-     * Checks if all fields have values
-     * @return true if all fields are filled and false otherwise.
-     */
 
 
     public boolean isFormValid(){
@@ -155,10 +145,7 @@ public class RegistrationActivity extends AppCompatActivity {
         addressEditText.getText().clear();
     }
 
-    /**
-     * Cette méthode retourne une erreur réseau selon le cas.
-     * @param networkError
-     */
+
     public void showError(NetworkError networkError){
         switch (networkError){
             case NO_CONNECTION_ERROR:

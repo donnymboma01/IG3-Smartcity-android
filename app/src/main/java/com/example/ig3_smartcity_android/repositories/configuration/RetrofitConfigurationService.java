@@ -12,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitConfigurationService {
 
-    public static final String BASE_URL ="http://192.168.1.11:3001/";
+    public static final String BASE_URL ="http://10.0.2.2:3001/";
 
     private Retrofit retrofitClient;
     private static ApiWebServices apiWebServices = null;
@@ -42,14 +42,6 @@ public class RetrofitConfigurationService {
         return new RetrofitConfigurationService(context);
     }
 
-    // this was written in Java. I mean, the WebServices interface was written in java.
-
-     /*public WebServives webServives(){
-        if(webServives == null){
-            webServives = retrofitClient.create((WebServives.class));
-        }
-        return webServives;
-    }*/
 
     public ApiWebServices apiWebServices(){
         if(apiWebServices == null){
