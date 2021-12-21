@@ -78,6 +78,7 @@
     <string name="disponible">Disponible :</string>
     <string name="utilisateur">Client :</string>
     <string name="categorie">Categorie :</string>
+    <string name="categoriesList">1) Burger 2) Pizza 3) Sushi\n4) Plat belge 5) Plat espagnol</string>
     <string name="description">Description :</string>
     <string name="nom_repas">Nom du repas :</string>
     <string name="header_text">Liste des repas</string>
@@ -86,7 +87,7 @@
     <string name="reclamer">réclamer</string>
     <string name="meal_clicked">Plat selectionné</string>
     <string name="nomReaps">nom du repas</string>
-    <string name="description_repas">déscription</string>
+    <string name="description_repas">description</string>
     <string name="categorie_repas">catégorie</string>
     <string name="nombre_portion">nombre de portions</string>
     <string name="donation">Donation</string>
@@ -97,6 +98,7 @@
     <string name="navigation_open">Open navigation drawer</string>
     <string name="navigation_close">Close navigation drawer</string>
     <string name="connecting">connexion...</string>
+
 
     <!--Meals Categories-->
     <string-array name="meals_categories">

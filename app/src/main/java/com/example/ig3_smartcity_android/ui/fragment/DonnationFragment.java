@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,14 +22,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.databinding.FragmentDonnationBinding;
-import com.example.ig3_smartcity_android.model.Meal;
-import com.example.ig3_smartcity_android.model.Token;
-import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity;
+import com.example.ig3_smartcity_android.model.JwtTokenPayload;
+import com.example.ig3_smartcity_android.repositories.dto.JwtTokenPayloadDTO;
+import com.example.ig3_smartcity_android.services.mappers.TokenMapper;
+import com.example.ig3_smartcity_android.ui.actitvity.MainActivity;
 import com.example.ig3_smartcity_android.ui.viewModel.DonnationViewModel;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 
 public class DonnationFragment extends Fragment {
@@ -46,9 +54,6 @@ public class DonnationFragment extends Fragment {
     private DonnationViewModel donnationViewModel;
     private FragmentDonnationBinding binding;
     private SharedPreferences sharedPreferences;
-    private Token jwtToken;
-
-    private boolean areAllFiledsChecked = false;
 
     public DonnationFragment() {
         // Required empty public constructor
@@ -61,8 +66,6 @@ public class DonnationFragment extends Fragment {
         // Inflate the layout for this fragment
         donnationViewModel = new ViewModelProvider(this).get(DonnationViewModel.class);
         binding = FragmentDonnationBinding.inflate(inflater,container,false);
-        //binding.getViewModel();
-        //binding.getLifecycleOwner();
         View root  = inflater.inflate(R.layout.fragment_donnation,container,false);
         nameMealText = root.findViewById(R.id.nom);
         descriptionText = root.findViewById(R.id.descriptionID);
@@ -72,16 +75,10 @@ public class DonnationFragment extends Fragment {
         addMealButton = root.findViewById(R.id.donnationID);
         takePictureButton = root.findViewById(R.id.takePictureId);
 
-        //gestion du token pour l'ajout du repas.
-        sharedPreferences = requireActivity().getSharedPreferences("sharedPref",Context.MODE_PRIVATE);
-        //récuperation du token généré à la connexion et stocké dans le sharedPreference.
-        String token = sharedPreferences.getString(getString(R.string.token),"");
-        jwtToken = new Token(token);
-
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{
                     Manifest.permission.CAMERA
-            },100);
+            },REQUEST_IMAGE_CAPTURE);
         }
 
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -101,10 +98,10 @@ public class DonnationFragment extends Fragment {
         addMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                areAllFiledsChecked = isFormValid();
+                boolean areAllFiledsChecked = isFormValid();
                 if(areAllFiledsChecked){
                     addMeal();
-                    //Toast.makeText(getContext(),"Bonjour ce bouton marche",Toast.LENGTH_LONG).show();
+                    goToMainActivity();
                 }
             }
         });
@@ -140,23 +137,42 @@ public class DonnationFragment extends Fragment {
     }
 
     public void addMeal(){
-        String portion = nbPortionText.getText().toString();
+        //JWT
+        sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(getString(R.string.token),"");
+        DecodedJWT decodedJWT = JWT.decode(token);
+        Claim jwtPayload = decodedJWT.getClaim("value");
+        JwtTokenPayloadDTO JwtTokenPayloadDTO = jwtPayload.as(JwtTokenPayloadDTO.class);
+        JwtTokenPayload jwtTokenPayload = TokenMapper.INSTANCE.mapToJwtTokenPayload(JwtTokenPayloadDTO);
+
+        //meal data
         String name = nameMealText.getText().toString();
         String description = descriptionText.getText().toString();
-        Integer nbPortion = Integer.parseInt(portion);
+        Integer portionNumber = Integer.parseInt(nbPortionText.getText().toString());
+        Integer userId = jwtTokenPayload.getId();
+        Integer categorieId = Integer.parseInt(categorieText.getText().toString());
         String image = imageView.toString();
-       /* Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageInByte = baos.toByteArray();
-        Integer nbPortion = Integer.parseInt(portion);
-        String categorie = categorieText.getText().toString();
-        Integer categorie_fk = Integer.parseInt(categorie);*/
 
+        //FormData
+        HashMap<String, MultipartBody.Part> partMap = new HashMap<>();
+        MultipartBody.Part namePart = MultipartBody.Part.createFormData("name", null, RequestBody.create(MediaType.parse("text/plain"), name));
+        MultipartBody.Part descriptionPart = MultipartBody.Part.createFormData("description", null, RequestBody.create(MediaType.parse("text/plain"), description));
+        MultipartBody.Part portionNumberPart = MultipartBody.Part.createFormData("portion_number", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(portionNumber)));
+        MultipartBody.Part userFkPart = MultipartBody.Part.createFormData("user_fk", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userId)));
+        MultipartBody.Part categoryFkPart = MultipartBody.Part.createFormData("category_fk", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categorieId)));
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", "image", RequestBody.create(MediaType.parse("image/*"), imageInByte));
 
-        Meal meal = new Meal(name,description,image,nbPortion);
-        donnationViewModel.addNewMeal(meal,jwtToken);
+        donnationViewModel.addNewMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, filePart, token);
 
+    }
+
+    private void goToMainActivity(){
+        Intent intent = new Intent(requireActivity().getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
 }

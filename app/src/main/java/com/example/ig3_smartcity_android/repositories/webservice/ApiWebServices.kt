@@ -1,9 +1,9 @@
 package com.example.ig3_smartcity_android.repositories.webservice
 
 import com.example.ig3_smartcity_android.repositories.dto.LoginUserDTO
-import com.example.ig3_smartcity_android.repositories.dto.MealDTO
-import com.example.ig3_smartcity_android.repositories.dto.TokenDTO
+import com.example.ig3_smartcity_android.repositories.dto.MealToReceiveDTO
 import com.example.ig3_smartcity_android.repositories.dto.UserDTO
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -20,13 +20,15 @@ interface ApiWebServices {
 
     //récupère un repas par son id --> pas vraiment besoin pour ce projet
     @GET("/v1/meal/{id}")
-    fun getMealById(@Path("id") mealId :Int ) :Call<MealDTO>
+    fun getMealById(@Path("id") mealId :Int ) :Call<MealToReceiveDTO>
 
     //récupère tous les repas. -->OK
     @GET("V1/meal")
-    fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
+    fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealToReceiveDTO>>
 
     //Ajout d'un repas.
+    @Multipart
     @POST("V1/meal")
-    fun addMeal(@Body mealDTO: MealDTO, @Header("Authorization") authHeader: String):Call<String>
+    fun addMeal(@Part namePart:MultipartBody.Part, @Part descriptionPart:MultipartBody.Part,@Part portionNumberPart:MultipartBody.Part,
+                @Part userFkPart:MultipartBody.Part,@Part categoryFkPart:MultipartBody.Part, @Part image: MultipartBody.Part, @Header("Authorization") authHeader: String):Call<String>
 }

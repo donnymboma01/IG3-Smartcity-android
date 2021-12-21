@@ -1,24 +1,14 @@
 package com.example.ig3_smartcity_android.services.mappers
 
 import com.example.ig3_smartcity_android.model.Category
-import com.example.ig3_smartcity_android.model.Meal
+import com.example.ig3_smartcity_android.model.MealToReceive
 import com.example.ig3_smartcity_android.model.User
 import com.example.ig3_smartcity_android.repositories.dto.CategoryDTO
-import com.example.ig3_smartcity_android.repositories.dto.MealDTO
+import com.example.ig3_smartcity_android.repositories.dto.MealToReceiveDTO
 import com.example.ig3_smartcity_android.repositories.dto.UserDTO
 import java.util.ArrayList
 
 object MealMapper {
-
-    fun mapToMealDto(meal: Meal?):MealDTO?{
-        if(meal == null){
-            return null
-        }else{
-            return MealDTO(meal.name,meal.description,meal.image,meal.portion_number)
-        }
-
-    }
-
     fun mapToCategoryDto(category :Category):CategoryDTO{
         return CategoryDTO(category.name)
     }
@@ -61,14 +51,14 @@ object MealMapper {
             return meals
         }
     }*/
-    fun mapToMeal(mealdto: List<MealDTO>?): ArrayList<Meal>? {
+    fun mapToMeal(mealdto: List<MealToReceiveDTO>?): ArrayList<MealToReceive>? {
         if (mealdto == null) {
             return  null
         } else {
-            val meals = ArrayList<Meal>()
+            val meals = ArrayList<MealToReceive>()
             for ((name, description,image,portion_number) in mealdto) {
                 val meal =
-                    Meal(name, description,image,portion_number)
+                    MealToReceive(name, description,image,portion_number)
                 meals.add(meal)
             }
             return meals

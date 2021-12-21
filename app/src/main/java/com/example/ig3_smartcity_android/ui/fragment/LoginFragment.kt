@@ -15,7 +15,6 @@ import com.example.ig3_smartcity_android.R
 import com.example.ig3_smartcity_android.databinding.FragmentLoginBinding
 import com.example.ig3_smartcity_android.model.LoginUser
 import com.example.ig3_smartcity_android.model.NetworkError
-import com.example.ig3_smartcity_android.model.Token
 import com.example.ig3_smartcity_android.ui.actitvity.MainActivity
 import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity
 import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel
@@ -60,16 +59,16 @@ class LoginFragment : Fragment() {
         }
 
         loginUserViewModel.jwt.observe(viewLifecycleOwner){
-            token :Token ->this.preferencesSaved(token)
+            token :String ->this.preferencesSaved(token)
             goToMainActivity()
         }
         return binding.root
 
     }
 
-    private fun preferencesSaved(token : Token){
+    private fun preferencesSaved(token : String){
         var editor : SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(getString(R.string.token),token.token).apply()
+        editor.putString(getString(R.string.token),token).apply()
 
     }
 

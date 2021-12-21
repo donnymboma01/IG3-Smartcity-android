@@ -6,10 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ig3_smartcity_android.model.LoginUser
 import com.example.ig3_smartcity_android.model.NetworkError
-import com.example.ig3_smartcity_android.model.Token
 import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService
-import com.example.ig3_smartcity_android.repositories.dto.TokenDTO
-import com.example.ig3_smartcity_android.services.mappers.TokenMapper
 import com.example.ig3_smartcity_android.services.mappers.UserLoginMapper
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import retrofit2.Call
@@ -21,19 +18,18 @@ class LoginUserViewModel(application: Application) : AndroidViewModel(applicatio
     private val _error : MutableLiveData<NetworkError> = MutableLiveData()
     val error : LiveData<NetworkError> = _error
 
-    private val _jwt : MutableLiveData<Token> = MutableLiveData()
-    val jwt : LiveData<Token> = _jwt;
+    private val _jwt : MutableLiveData<String> = MutableLiveData()
+    val jwt : LiveData<String> = _jwt;
 
     private var apiWebServices = RetrofitConfigurationService.getInstance(application).apiWebServices()
     private var userLoginMapper = UserLoginMapper
-    private var tokenMapper = TokenMapper
 
     fun loginUser(loginUser : LoginUser) {
         apiWebServices.userLogin(userLoginMapper.mapToLoginUserDTO(loginUser)).enqueue(object :retrofit2.Callback<String>{
             override  fun onResponse(call : Call<String>,response : Response<String>){
                 if(response.isSuccessful){
                     _error.value = NetworkError.NO_ERROR_DETECTED
-                    _jwt.value = tokenMapper.mapToToken(response.body()!!)
+                    _jwt.value = response.body()!!;
 
                 }else{
                     _error.value = NetworkError.REQUEST_ERROR
