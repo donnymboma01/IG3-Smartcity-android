@@ -100,8 +100,10 @@ public class DonnationFragment extends Fragment {
             public void onClick(View v) {
                 boolean areAllFiledsChecked = isFormValid();
                 if(areAllFiledsChecked){
-                    addMeal();
-                    goToMainActivity();
+                    boolean isMealAdded = addMeal();
+                    if(isMealAdded) {
+                        goToMainActivity();
+                    }
                 }
             }
         });
@@ -136,7 +138,7 @@ public class DonnationFragment extends Fragment {
         return true;
     }
 
-    public void addMeal(){
+    public boolean addMeal(){
         //JWT
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(getString(R.string.token),"");
@@ -151,11 +153,13 @@ public class DonnationFragment extends Fragment {
         Integer portionNumber = Integer.parseInt(nbPortionText.getText().toString());
         Integer userId = jwtTokenPayload.getId();
         Integer categorieId = Integer.parseInt(categorieText.getText().toString());
-        String image = imageView.toString();
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageInByte = baos.toByteArray();
+        byte[] imageInByte = null;
+        if(imageView.getDrawable() != null){
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            imageInByte = baos.toByteArray();
+        }
 
         //FormData
         HashMap<String, MultipartBody.Part> partMap = new HashMap<>();
@@ -164,10 +168,17 @@ public class DonnationFragment extends Fragment {
         MultipartBody.Part portionNumberPart = MultipartBody.Part.createFormData("portion_number", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(portionNumber)));
         MultipartBody.Part userFkPart = MultipartBody.Part.createFormData("user_fk", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(userId)));
         MultipartBody.Part categoryFkPart = MultipartBody.Part.createFormData("category_fk", null, RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categorieId)));
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", "image", RequestBody.create(MediaType.parse("image/*"), imageInByte));
-
-        donnationViewModel.addNewMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, filePart, token);
-
+        MultipartBody.Part filePart = null;
+        if(imageInByte != null){
+            filePart = MultipartBody.Part.createFormData("image", "image", RequestBody.create(MediaType.parse("image/*"), imageInByte));
+        }
+        if(filePart != null){
+            donnationViewModel.addNewMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, filePart, token);
+            return true;
+        }else{
+            Toast.makeText(getContext(),R.string.imageRequired,Toast.LENGTH_LONG).show();
+        }
+        return false;
     }
 
     private void goToMainActivity(){

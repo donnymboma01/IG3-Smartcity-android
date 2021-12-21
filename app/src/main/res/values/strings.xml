@@ -98,6 +98,7 @@
     <string name="navigation_open">Open navigation drawer</string>
     <string name="navigation_close">Close navigation drawer</string>
     <string name="connecting">connexion...</string>
+    <string name="imageRequired">Une photo est requise</string>
 
 
     <!--Meals Categories-->
