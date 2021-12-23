@@ -1,8 +1,8 @@
-package com.example.ig3_smartcity_android.repositories.configuration;
+package com.example.ig3_smartcity_android.dataAccess.configuration;
 
 import  android.content.Context;
 
-import com.example.ig3_smartcity_android.repositories.webservice.ApiWebServices;
+import com.example.ig3_smartcity_android.dataAccess.webservice.ApiWebServices;
 import com.example.ig3_smartcity_android.utils.ConnectivityCheckInterceptor;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
@@ -12,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitConfigurationService {
 
-    public static final String BASE_URL ="http://10.0.2.2:3001/";
+    public static final String BASE_URL ="http://192.168.1.11:3001/";
 
     private Retrofit retrofitClient;
     private static ApiWebServices apiWebServices = null;
@@ -27,14 +27,13 @@ public class RetrofitConfigurationService {
                 .addInterceptor(new ConnectivityCheckInterceptor(context))
                 .build();
 
-
         Moshi moshiConverter = new Moshi.Builder()
                 .add(new KotlinJsonAdapterFactory())
                 .build();
 
         this.retrofitClient = new Retrofit.Builder()
                 .client(client)
-                .addConverterFactory(MoshiConverterFactory.create(moshiConverter))
+                .addConverterFactory(MoshiConverterFactory.create(moshiConverter).asLenient())
                 .baseUrl(BASE_URL)
                 .build();
     }

@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService
 import com.example.ig3_smartcity_android.model.LoginUser
 import com.example.ig3_smartcity_android.model.NetworkError
-import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService
 import com.example.ig3_smartcity_android.services.mappers.UserLoginMapper
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import retrofit2.Call
@@ -40,7 +40,6 @@ class LoginUserViewModel(application: Application) : AndroidViewModel(applicatio
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
-                    System.out.println(t)
                     _error.value = NetworkError.TECHNICAL_ERROR
                 }
 

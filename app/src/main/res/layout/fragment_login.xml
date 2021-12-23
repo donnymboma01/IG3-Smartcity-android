@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinsmedium"
+            android:maxLines="1"
             android:drawableStart="@drawable/ic_username"
             android:id="@+id/username"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +67,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:fontFamily="@font/poppinsmedium"
+            android:maxLines="1"
             android:drawableStart="@drawable/ic_baseline_lock_24"
             android:id="@+id/password">
         </com.google.android.material.textfield.TextInputEditText>

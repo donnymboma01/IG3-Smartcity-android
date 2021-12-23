@@ -1,5 +1,8 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,16 +10,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import com.example.ig3_smartcity_android.R;
+import com.example.ig3_smartcity_android.model.MealToReceive;
+import com.example.ig3_smartcity_android.ui.fragment.CartRecyclerViewFragment;
 import com.example.ig3_smartcity_android.ui.fragment.DonnationFragment;
 import com.example.ig3_smartcity_android.ui.fragment.MealRecycleViewFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
+
+    private static ArrayList<MealToReceive> mealsForCart = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +62,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_donnation:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new DonnationFragment()).commit();
+                break;
+            case R.id.nav_cart:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CartRecyclerViewFragment()).commit();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public static ArrayList<MealToReceive> getMealsForCart(){
+        return mealsForCart;
+    }
+    public static void addMealToCart(MealToReceive mealToAdd){
+        mealsForCart.add(mealToAdd);
+    }
+    public static void resetCart(){
+        mealsForCart.clear();
     }
 }

@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService
 import com.example.ig3_smartcity_android.model.NetworkError
-import com.example.ig3_smartcity_android.repositories.configuration.RetrofitConfigurationService
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -21,8 +21,8 @@ class DonnationViewModel(application: Application) :AndroidViewModel(application
 
     fun addNewMeal(namePart:MultipartBody.Part,descriptionPart:MultipartBody.Part,portionNumberPart:MultipartBody.Part,
                    userFkPart:MultipartBody.Part,categoryFkPart:MultipartBody.Part, image:MultipartBody.Part, token: String){
-        apiWebServices.addMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, image, "Bearer $token").enqueue(object :Callback<String>{
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+        apiWebServices.addMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, image, "Bearer $token").enqueue(object :Callback<String?>{
+            override fun onResponse(call: Call<String?>, response: Response<String?>) {
                 if(response.isSuccessful){
                     _error.value = NetworkError.NO_ERROR_DETECTED
                     print(response.body())
@@ -31,7 +31,7 @@ class DonnationViewModel(application: Application) :AndroidViewModel(application
                 }
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
+            override fun onFailure(call: Call<String?>, t: Throwable) {
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{

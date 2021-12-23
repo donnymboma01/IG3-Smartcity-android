@@ -82,9 +82,9 @@
     <string name="description">Description :</string>
     <string name="nom_repas">Nom du repas :</string>
     <string name="header_text">Liste des repas</string>
-    <string name="portion_number">Quantité</string>
+    <string name="portion_number">Quantité: </string>
     <string name="datePublication">Date de publication :</string>
-    <string name="reclamer">réclamer</string>
+    <string name="addToCart">Ajouter au panier</string>
     <string name="meal_clicked">Plat selectionné</string>
     <string name="nomReaps">nom du repas</string>
     <string name="description_repas">description</string>
@@ -99,6 +99,14 @@
     <string name="navigation_close">Close navigation drawer</string>
     <string name="connecting">connexion...</string>
     <string name="imageRequired">Une photo est requise</string>
+    <string name="claim">Réclamer</string>
+    <string name="resetCart">Vider le panier</string>
+    <string name="enterNumber">Entrez des chiffres pour\ncatégorie et nombre de portion</string>
+    <string name="emptyCart">Panier vide</string>
+    <string name="mealAlreadyInCart">Ce repas est déjà dans le panier</string>
+    <string name="quantity">Quantité: </string>
+
+
 
 
     <!--Meals Categories-->

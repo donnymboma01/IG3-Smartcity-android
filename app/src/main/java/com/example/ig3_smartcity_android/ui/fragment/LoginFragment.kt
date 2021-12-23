@@ -4,12 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.ig3_smartcity_android.R
 import com.example.ig3_smartcity_android.databinding.FragmentLoginBinding
@@ -17,6 +16,7 @@ import com.example.ig3_smartcity_android.model.LoginUser
 import com.example.ig3_smartcity_android.model.NetworkError
 import com.example.ig3_smartcity_android.ui.actitvity.MainActivity
 import com.example.ig3_smartcity_android.ui.actitvity.RegistrationActivity
+import com.example.ig3_smartcity_android.ui.error.ApiError
 import com.example.ig3_smartcity_android.ui.viewModel.LoginUserViewModel
 
 
@@ -32,10 +32,10 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
-       loginUserViewModel = ViewModelProvider(this).get(LoginUserViewModel::class.java)
+       loginUserViewModel = ViewModelProvider(this)[LoginUserViewModel::class.java]
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         binding.viewModel = loginUserViewModel
         binding.lifecycleOwner = this
@@ -45,8 +45,7 @@ class LoginFragment : Fragment() {
         usernameText = binding.username
         passwordText = binding.password
 
-        loginUserViewModel.error.observe(viewLifecycleOwner){
-                error : NetworkError -> this.showError(error)
+        loginUserViewModel.error.observe(viewLifecycleOwner) { error: NetworkError -> ApiError.showError(error, this.context)
         }
         binding.loginButtonID.setOnClickListener{
             areAllFieldsChecked = areFiledsNotEmpty()
@@ -67,42 +66,29 @@ class LoginFragment : Fragment() {
     }
 
     private fun preferencesSaved(token : String){
-        var editor : SharedPreferences.Editor = sharedPreferences.edit()
+        val editor : SharedPreferences.Editor = sharedPreferences.edit()
         editor.putString(getString(R.string.token),token).apply()
-
     }
 
-    private fun showError(error: NetworkError){
-        when(error){
-            NetworkError.TECHNICAL_ERROR ->Toast.makeText(activity,R.string.technical_error,Toast.LENGTH_LONG).show()
-            NetworkError.NO_CONNECTION_ERROR ->Toast.makeText(activity,R.string.connection_error,Toast.LENGTH_LONG).show()
-            NetworkError.REQUEST_ERROR ->Toast.makeText(activity,R.string.request_error,Toast.LENGTH_LONG).show()
-            NetworkError.BAD_CREDENTIALS_ERROR ->Toast.makeText(activity,R.string.credentials_problem,Toast.LENGTH_LONG).show()
-            else ->{
-                NetworkError.NO_ERROR_DETECTED
-            }
-        }
-    }
-
-    fun areFiledsNotEmpty(): Boolean {
-        if (usernameText!!.length() == 0) {
-            usernameText!!.error = resources.getText(R.string.username_empty_message)
+    private fun areFiledsNotEmpty(): Boolean {
+        if (usernameText.length() == 0) {
+            usernameText.error = resources.getText(R.string.username_empty_message)
             return false
         }
-        if (passwordText!!.length() == 0) {
-            passwordText!!.error = resources.getText(R.string.password_empty_message)
+        if (passwordText.length() == 0) {
+            passwordText.error = resources.getText(R.string.password_empty_message)
             return false
         }
         return true
     }
 
     private fun goToMainActivity(){
-        var intent : Intent = Intent(requireActivity().applicationContext,MainActivity::class.java)
+        val intent = Intent(requireActivity().applicationContext,MainActivity::class.java)
         startActivity(intent)
     }
 
     private fun goToRegisterActivity(){
-        var intent :Intent = Intent(requireActivity().applicationContext,RegistrationActivity::class.java)
+        val intent = Intent(requireActivity().applicationContext,RegistrationActivity::class.java)
         startActivity(intent)
     }
 
@@ -110,7 +96,7 @@ class LoginFragment : Fragment() {
      * calls the loginUserViewModel to log in the user.
      */
     private fun loginUser(){
-        var login = LoginUser(
+        val login = LoginUser(
             usernameText.text.toString(),
             passwordText.text.toString()
         )

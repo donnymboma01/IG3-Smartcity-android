@@ -1,24 +1,23 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.model.NetworkError;
 import com.example.ig3_smartcity_android.model.User;
+import com.example.ig3_smartcity_android.ui.error.ApiError;
 import com.example.ig3_smartcity_android.ui.viewModel.RegistrationViewModel;
+
+import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -32,19 +31,14 @@ public class RegistrationActivity extends AppCompatActivity {
             telephoneText;
 
     private Button buttonRegister;
-    private boolean areAllFieldsChecked = false;
-    private SharedPreferences sharedPreferences;
     private RegistrationViewModel registrationViewModel;
-    private boolean isUserRegistred = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        sharedPreferences = getSharedPreferences(getString(R.string.sharedPref), Context.MODE_PRIVATE);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //pour afficher le bouton retour vers l'activité login.
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true); //pour afficher le bouton retour vers l'activité login.
         getSupportActionBar().setTitle(R.string.inscription);
         registrationViewModel = new ViewModelProvider(this).get(RegistrationViewModel.class);
 
@@ -62,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                areAllFieldsChecked = isFormValid();
+                boolean areAllFieldsChecked = isFormValid();
                 if(areAllFieldsChecked){
                     registerUser();
                     resetFormAfterRegister();
@@ -70,10 +64,11 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        registrationViewModel.getError().observe(this,networkError -> {
-            showError(networkError);
-            if(!isUserRegistred){
-                Toast.makeText(this,R.string.registration_message,Toast.LENGTH_LONG).show();
+        registrationViewModel.getError().observe(this,error -> {
+            if(error == NetworkError.NO_ERROR_DETECTED){
+                Toast.makeText(this,R.string.registration_message,Toast.LENGTH_SHORT).show();
+            }else{
+                ApiError.showError(error, this);
             }
         });
 
@@ -82,10 +77,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -123,10 +117,18 @@ public class RegistrationActivity extends AppCompatActivity {
             addressEditText.setError(getResources().getText(R.string.address_empty_error));
             return false;
         }
-        if(telephoneText.length() == 0){
+
+        try{
+            Integer.parseInt(telephoneText.getText().toString());
+            if(telephoneText.length() == 0){
+                telephoneText.setError(getResources().getText(R.string.phone_error));
+                return false;
+            }
+        }catch (Exception e){
             telephoneText.setError(getResources().getText(R.string.phone_error));
             return false;
         }
+
         return true;
     }
 
@@ -145,30 +147,11 @@ public class RegistrationActivity extends AppCompatActivity {
         addressEditText.getText().clear();
     }
 
-
-    public void showError(NetworkError networkError){
-        switch (networkError){
-            case NO_CONNECTION_ERROR:
-                Toast.makeText(this,R.string.connection_error,Toast.LENGTH_LONG).show();
-                break;
-            case TECHNICAL_ERROR:
-                Toast.makeText(this,R.string.technical_error,Toast.LENGTH_LONG).show();
-                break;
-            case USER_ALREADY_EXIST:
-                Toast.makeText(this,R.string.user_exists,Toast.LENGTH_LONG).show();
-                break;
-            case REQUEST_ERROR:
-                Toast.makeText(this,R.string.request_error,Toast.LENGTH_LONG).show();
-                break;
-        }
-    }
-
-
     /**
      * this method allows to register a new user to the database.
      */
     public void registerUser(){
-        User user = new User(
+        User user = new User(null,
                 firstnameEditText.getText().toString(),
                 nameEditText.getText().toString(),
                 telephoneText.getText().toString(),
