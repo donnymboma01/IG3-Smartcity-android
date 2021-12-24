@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +43,7 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -52,7 +55,7 @@ public class CartRecyclerViewFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private String token;
 
-    private Button claimButton;
+    private Button claimButton, resetCart;
 
     public CartRecyclerViewFragment(){
 
@@ -63,6 +66,7 @@ public class CartRecyclerViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_cart,container,false);
         claimButton = root.findViewById(R.id.claimButton);
+        resetCart = root.findViewById(R.id.resetCartButton);
         RecyclerView mealRecycleView = root.findViewById(R.id.mealRecyclerView);
         mealRecycleView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
@@ -82,6 +86,14 @@ public class CartRecyclerViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 placeOrder();
+            }
+        });
+        resetCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.resetCart();
+                CartRecyclerViewFragment cartRecyclerViewFragment = new CartRecyclerViewFragment();
+                goToFragmentX(cartRecyclerViewFragment);
             }
         });
 
@@ -174,8 +186,8 @@ public class CartRecyclerViewFragment extends Fragment {
                     RequestBody body = RequestBody.create(MediaType.parse("application/json"), Orderjson);
                     cartViewModel.createOrder(body, token);
                     MainActivity.resetCart();
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    startActivity(intent);
+                    MealRecycleViewFragment mealRecycleViewFragment = new MealRecycleViewFragment();
+                    goToFragmentX(mealRecycleViewFragment);
                 }else{
                     Toast.makeText(getContext(),R.string.emptyCart,Toast.LENGTH_SHORT).show();
                 }
@@ -184,5 +196,15 @@ public class CartRecyclerViewFragment extends Fragment {
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void goToFragmentX(Fragment fragment){
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
     }
 }

@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.auth0.jwt.JWT;
@@ -30,11 +32,11 @@ import com.example.ig3_smartcity_android.dataAccess.dto.JwtTokenPayloadDTO;
 import com.example.ig3_smartcity_android.model.JwtTokenPayload;
 import com.example.ig3_smartcity_android.services.mappers.TokenMapper;
 import com.example.ig3_smartcity_android.ui.actitvity.LoginActivity;
-import com.example.ig3_smartcity_android.ui.actitvity.MainActivity;
 import com.example.ig3_smartcity_android.ui.error.ApiError;
 import com.example.ig3_smartcity_android.ui.viewModel.DonnationViewModel;
 
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -94,7 +96,7 @@ public class DonnationFragment extends Fragment {
                     Toast.makeText(getContext(),getResources().getText(R.string.camera_error),Toast.LENGTH_SHORT).show();
                 } else {
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); //deprecated mais comme dans l'app example
                 }
             }
         });
@@ -106,7 +108,7 @@ public class DonnationFragment extends Fragment {
                 if(areAllFiledsChecked){
                     boolean isMealAdded = addMeal();
                     if(isMealAdded) {
-                        goToMainActivity();
+                        goToMealsList();
                     }
                 }
             }
@@ -116,8 +118,7 @@ public class DonnationFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){//deprecated mais comme dans l'app example
         if(requestCode == REQUEST_IMAGE_CAPTURE ){
             if(data!=null){
                 Bundle bundle = data.getExtras();
@@ -210,8 +211,18 @@ public class DonnationFragment extends Fragment {
         return false;
     }
 
-    private void goToMainActivity(){
-        Intent intent = new Intent(requireActivity(), MainActivity.class);
-        startActivity(intent);
+    private void goToMealsList(){
+        try {
+            TimeUnit.MILLISECONDS.sleep(20); //pour que ca ait le temps de charger le plat qu'on vient d'ajouter
+        } catch (InterruptedException ignored) {
+        }
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        MealRecycleViewFragment fragment = new MealRecycleViewFragment();
+
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
     }
 }

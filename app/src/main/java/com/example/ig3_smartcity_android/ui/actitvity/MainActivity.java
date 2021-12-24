@@ -1,5 +1,8 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -65,6 +68,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_cart:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CartRecyclerViewFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.sharedPref), Context.MODE_PRIVATE);
+                String token = sharedPreferences.getString(getString(R.string.token),null);
+                if(token != null){
+                    sharedPreferences.edit().remove(getString(R.string.token)).apply();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                }
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

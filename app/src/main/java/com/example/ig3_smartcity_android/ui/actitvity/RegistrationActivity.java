@@ -1,5 +1,6 @@
 package com.example.ig3_smartcity_android.ui.actitvity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +68,8 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationViewModel.getError().observe(this,error -> {
             if(error == NetworkError.NO_ERROR_DETECTED){
                 Toast.makeText(this,R.string.registration_message,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
             }else{
                 ApiError.showError(error, this);
             }
@@ -125,7 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 return false;
             }
         }catch (Exception e){
-            telephoneText.setError(getResources().getText(R.string.phone_error));
+            telephoneText.setError(getResources().getText(R.string.phone_character));
             return false;
         }
 

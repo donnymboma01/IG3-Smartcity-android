@@ -4,6 +4,6 @@ import java.util.*
 
 data class Order(val order_date:Date?,
                  val user: User,
-                 val meals_id: List<MealToReceive>){
+                 val meals: List<MealToReceive>){
 
 }

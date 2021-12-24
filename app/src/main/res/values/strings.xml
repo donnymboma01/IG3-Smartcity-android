@@ -100,6 +100,10 @@
     <string name="emptyCart">Panier vide</string>
     <string name="mealAlreadyInCart">Ce repas est déjà dans le panier</string>
     <string name="quantity">Quantité: </string>
+    <string name="logout">Se déconnecter </string>
+    <string name="resetCart">Vider le panier</string>
+    <string name="phone_character">Entrez des chiffres pour le numéro de téléphone</string>
+
 
 
     <string name="arnaud_donny"><![CDATA[made by Arnaud Berg & Donny Mboma]]></string>
