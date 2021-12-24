@@ -14,7 +14,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.ig3_smartcity_android.R;
-import com.example.ig3_smartcity_android.model.MealToReceive;
+import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.ui.fragment.CartRecyclerViewFragment;
 import com.example.ig3_smartcity_android.ui.fragment.DonnationFragment;
 import com.example.ig3_smartcity_android.ui.fragment.MealRecycleViewFragment;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
 
-    private static ArrayList<MealToReceive> mealsForCart = new ArrayList<>();
+    private static ArrayList<Meal> mealsForCart = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public static ArrayList<MealToReceive> getMealsForCart(){
+    public static ArrayList<Meal> getMealsForCart(){
         return mealsForCart;
     }
-    public static void addMealToCart(MealToReceive mealToAdd){
+    public static void addMealToCart(Meal mealToAdd){
         mealsForCart.add(mealToAdd);
     }
     public static void resetCart(){

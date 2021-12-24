@@ -8,7 +8,6 @@ import com.example.ig3_smartcity_android.model.NetworkError;
 
 public class ApiError {
     public static void showError(NetworkError error, Context context) {
-        System.out.println(error);
         switch (error) {
             case TECHNICAL_ERROR:
                 Toast.makeText(context, R.string.technical_error, Toast.LENGTH_SHORT).show();
@@ -25,6 +24,8 @@ public class ApiError {
             case BAD_CREDENTIALS_ERROR:
                 Toast.makeText(context, R.string.credentials_problem, Toast.LENGTH_SHORT).show();
                 break;
+            case MEAL_ALREADY_CLAIMED:
+                Toast.makeText(context, R.string.meal_already_claimed, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -6,8 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService
-import com.example.ig3_smartcity_android.dataAccess.dto.MealToReceiveDTO
-import com.example.ig3_smartcity_android.model.MealToReceive
+import com.example.ig3_smartcity_android.dataAccess.dto.MealDTO
+import com.example.ig3_smartcity_android.model.Meal
 import com.example.ig3_smartcity_android.model.NetworkError
 import com.example.ig3_smartcity_android.services.mappers.MealMapper
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
@@ -16,8 +16,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MealViewModel(application: Application) :AndroidViewModel(application) {
-    private val _meal = MutableLiveData<List<MealToReceive>>()
-    val mealToReceive : LiveData<List<MealToReceive>> = _meal
+    private val _meal = MutableLiveData<List<Meal>>()
+    val meal : LiveData<List<Meal>> = _meal
 
     private val _error  = MutableLiveData<NetworkError?>()
     val error : LiveData<NetworkError?> = _error
@@ -27,8 +27,8 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
     private var mealMapper = MealMapper
 
     fun getAllMeals(token : String){
-        mealWebServices.getAllMeals("Bearer $token").enqueue(object : Callback<List<MealToReceiveDTO>> {
-            override fun onResponse(@NonNull call:Call<List<MealToReceiveDTO>>, @NonNull response: Response<List<MealToReceiveDTO>>){
+        mealWebServices.getAllMeals("Bearer $token").enqueue(object : Callback<List<MealDTO>> {
+            override fun onResponse(@NonNull call:Call<List<MealDTO>>, @NonNull response: Response<List<MealDTO>>){
                 if(response.isSuccessful){
                     _meal.value = mealMapper.mapToMeal(response.body())
                     _error.value = NetworkError.NO_ERROR_DETECTED
@@ -37,11 +37,10 @@ class MealViewModel(application: Application) :AndroidViewModel(application) {
                 }
             }
 
-            override fun onFailure(@NonNull call: Call<List<MealToReceiveDTO>>, @NonNull t: Throwable) {
+            override fun onFailure(@NonNull call: Call<List<MealDTO>>, @NonNull t: Throwable) {
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
-                    println(t)
                     _error.value = NetworkError.TECHNICAL_ERROR
                 }
             }

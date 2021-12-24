@@ -25,7 +25,6 @@ class DonnationViewModel(application: Application) :AndroidViewModel(application
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
                 if(response.isSuccessful){
                     _error.value = NetworkError.NO_ERROR_DETECTED
-                    print(response.body())
                 }else{
                     _error.value = NetworkError.REQUEST_ERROR
                 }
@@ -36,7 +35,6 @@ class DonnationViewModel(application: Application) :AndroidViewModel(application
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
                     _error.value = NetworkError.TECHNICAL_ERROR
-                    print(t)
                 }
             }
         })

@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService;
-import com.example.ig3_smartcity_android.model.MealToReceive;
+import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.ui.actitvity.LoginActivity;
 import com.example.ig3_smartcity_android.ui.actitvity.MealDescription;
 import com.example.ig3_smartcity_android.ui.error.ApiError;
@@ -67,7 +67,7 @@ public class MealRecycleViewFragment extends Fragment {
             startActivity(intent);
         }
         mealAdapter = new MealAdapter(getActivity());
-        mealViewModel.getMealToReceive().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
+        mealViewModel.getMeal().observe(getViewLifecycleOwner(),mealAdapter::setMeals);
         mealViewModel.getError().observe(getViewLifecycleOwner(), error ->{
             ApiError.showError(error, getContext());
         });
@@ -108,7 +108,7 @@ public class MealRecycleViewFragment extends Fragment {
     //Adapter.
     private static class MealAdapter extends RecyclerView.Adapter<MealViewHolder>{
 
-        private List<MealToReceive> mealToReceives;
+        private List<Meal> meals;
         private Context context;
 
         public MealAdapter(Context context){
@@ -120,10 +120,10 @@ public class MealRecycleViewFragment extends Fragment {
         public MealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_item_layout,parent,false);
             return new MealViewHolder(view, position->{
-                MealToReceive touchedMealToReceive = mealToReceives.get(position);
+                Meal touchedMeal = meals.get(position);
                 Intent intent = new Intent(fragment.getActivity(), MealDescription.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("currentMeal", touchedMealToReceive);
+                bundle.putSerializable("currentMeal", touchedMeal);
                 intent.putExtras(bundle);
                 fragment.requireActivity().startActivity(intent);
             });
@@ -132,12 +132,12 @@ public class MealRecycleViewFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
-            MealToReceive mealToReceive = mealToReceives.get(position);
-            String name  = mealToReceive.getName();
-            String description = mealToReceive.getDescription();
-            String mealImage = mealToReceive.getImage();
+            Meal meal = meals.get(position);
+            String name  = meal.getName();
+            String description = meal.getDescription();
+            String mealImage = meal.getImage();
             Uri mealUri = Uri.parse(mealImage);
-            Integer portionNumber = mealToReceive.getPortion_number();
+            Integer portionNumber = meal.getPortion_number();
 
             holder.mealName.setText(name);
             holder.description.setText(description);
@@ -152,11 +152,11 @@ public class MealRecycleViewFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mealToReceives == null ? 0: mealToReceives.size();
+            return meals == null ? 0: meals.size();
         }
 
-        public void setMeals(List<MealToReceive> mealToReceives){
-            this.mealToReceives = mealToReceives;
+        public void setMeals(List<Meal> meals){
+            this.meals = meals;
             notifyDataSetChanged();
         }
     }

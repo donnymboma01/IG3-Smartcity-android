@@ -50,8 +50,9 @@
     <string name="nbPortions_error">La portion est obligatoire</string>
     <string name="meal_description_error">Description obligatoire</string>
     <string name="camera_error">Cette action est impossible</string>
-
+    <string name="meal_already_claimed">Un repas de votre panier a déjà été réclamé</string>
     <string name="credentials_problem">Pseudo ou mot de passe incorrect !</string>
+
 
 
     <!--Welcome message-->
@@ -103,7 +104,6 @@
     <string name="logout">Se déconnecter </string>
     <string name="resetCart">Vider le panier</string>
     <string name="phone_character">Entrez des chiffres pour le numéro de téléphone</string>
-
 
 
     <string name="arnaud_donny"><![CDATA[made by Arnaud Berg & Donny Mboma]]></string>

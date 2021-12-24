@@ -1,13 +1,11 @@
 package com.example.ig3_smartcity_android.ui.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService
-import com.example.ig3_smartcity_android.model.MealToReceive
 import com.example.ig3_smartcity_android.model.NetworkError
 import com.example.ig3_smartcity_android.utils.errors.NoConnectivityException
 import okhttp3.RequestBody
@@ -27,7 +25,11 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
                 if(response.isSuccessful){
                     _error.value = NetworkError.NO_ERROR_DETECTED
                 }else{
-                    _error.value = NetworkError.REQUEST_ERROR
+                    if(response.code()==409){
+                        _error.value = NetworkError.MEAL_ALREADY_CLAIMED
+                    }else{
+                        _error.value = NetworkError.REQUEST_ERROR
+                    }
                 }
             }
 
@@ -35,7 +37,6 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
                 if(t is NoConnectivityException){
                     _error.value = NetworkError.NO_CONNECTION_ERROR
                 }else{
-                    println(t)
                     _error.value = NetworkError.TECHNICAL_ERROR
                 }
             }

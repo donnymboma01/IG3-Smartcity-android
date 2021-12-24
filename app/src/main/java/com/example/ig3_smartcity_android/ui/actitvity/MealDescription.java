@@ -2,7 +2,6 @@ package com.example.ig3_smartcity_android.ui.actitvity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService;
-import com.example.ig3_smartcity_android.model.MealToReceive;
+import com.example.ig3_smartcity_android.model.Meal;
 import com.example.ig3_smartcity_android.ui.viewModel.CartViewModel;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ public class MealDescription extends AppCompatActivity {
     private Button addToCart;
     private ImageView mealImage;
     private Intent intent;
-    private MealToReceive meal;
+    private Meal meal;
     private CartViewModel cartViewModel;
 
     @Override
@@ -51,7 +50,7 @@ public class MealDescription extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
-            meal = (MealToReceive) bundle.get("currentMeal");
+            meal = (Meal) bundle.get("currentMeal");
             setText(mealName,meal.getName());
             setText(description,meal.getDescription());
             setText(portion_number,String.valueOf(meal.getPortion_number()));
@@ -62,12 +61,10 @@ public class MealDescription extends AppCompatActivity {
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<MealToReceive> meals = MainActivity.getMealsForCart();
+                ArrayList<Meal> meals = MainActivity.getMealsForCart();
                 if(meals != null){
                     int i = 0;
                     boolean tabAlreadyContains = false;
-                    Log.i("debut", String.valueOf(i));
-                    Log.i("debut", String.valueOf(meals.size()));
 
                     while(i<meals.size() && !tabAlreadyContains){
                         if(Objects.equals(meals.get(i).getId(), meal.getId())){

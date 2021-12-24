@@ -30,6 +30,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.dataAccess.dto.JwtTokenPayloadDTO;
 import com.example.ig3_smartcity_android.model.JwtTokenPayload;
+import com.example.ig3_smartcity_android.model.NetworkError;
 import com.example.ig3_smartcity_android.services.mappers.TokenMapper;
 import com.example.ig3_smartcity_android.ui.actitvity.LoginActivity;
 import com.example.ig3_smartcity_android.ui.error.ApiError;
@@ -79,7 +80,12 @@ public class DonnationFragment extends Fragment {
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
         token = sharedPreferences.getString(getString(R.string.token),null);
 
-        donnationViewModel.getError().observe(getViewLifecycleOwner(), error -> ApiError.showError(error, getContext()));
+        donnationViewModel.getError().observe(getViewLifecycleOwner(), error ->{
+            ApiError.showError(error, getContext());
+            if(error == NetworkError.NO_ERROR_DETECTED){
+                goToMealsList();
+            }
+        });
 
         if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{
@@ -106,10 +112,7 @@ public class DonnationFragment extends Fragment {
             public void onClick(View v) {
                 boolean areAllFiledsChecked = isFormValid();
                 if(areAllFiledsChecked){
-                    boolean isMealAdded = addMeal();
-                    if(isMealAdded) {
-                        goToMealsList();
-                    }
+                    addMeal();
                 }
             }
         });
@@ -163,7 +166,7 @@ public class DonnationFragment extends Fragment {
         return true;
     }
 
-    public boolean addMeal(){
+    public void addMeal(){
         if(token != null){
             DecodedJWT decodedJWT = JWT.decode(token);
             Claim jwtPayload = decodedJWT.getClaim("value");
@@ -197,7 +200,6 @@ public class DonnationFragment extends Fragment {
                 }
                 if(filePart != null){
                     donnationViewModel.addNewMeal(namePart,descriptionPart,portionNumberPart,userFkPart,categoryFkPart, filePart, token);
-                    return true;
                 }else{
                     Toast.makeText(getContext(),R.string.imageRequired,Toast.LENGTH_SHORT).show();
                 }
@@ -208,7 +210,6 @@ public class DonnationFragment extends Fragment {
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
         }
-        return false;
     }
 
     private void goToMealsList(){

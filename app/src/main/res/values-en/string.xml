@@ -49,7 +49,7 @@
     <string name="nbPortions_error">Portion number is mandatory !</string>
     <string name="meal_description_error">Description is mandatory !</string>
     <string name="camera_error">Impossible to do this action</string>
-
+    <string name="meal_already_claimed">A meal in your cart has already been claimed</string>
     <string name="credentials_problem">Wrong username or password</string>
 
 

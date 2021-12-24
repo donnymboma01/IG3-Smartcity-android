@@ -1,7 +1,7 @@
 package com.example.ig3_smartcity_android.dataAccess.webservice
 
 import com.example.ig3_smartcity_android.dataAccess.dto.LoginUserDTO
-import com.example.ig3_smartcity_android.dataAccess.dto.MealToReceiveDTO
+import com.example.ig3_smartcity_android.dataAccess.dto.MealDTO
 import com.example.ig3_smartcity_android.dataAccess.dto.UserDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -20,7 +20,7 @@ interface ApiWebServices {
 
     //récupère tous les repas pas encore réclamés
     @GET("V1/meal?mealAvailableFilter=true")
-    fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealToReceiveDTO>>
+    fun getAllMeals(@Header("Authorization") authHeader: String) : Call<List<MealDTO>>
 
     //Ajout d'un repas
     @Multipart

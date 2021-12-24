@@ -30,7 +30,8 @@ import com.example.ig3_smartcity_android.R;
 import com.example.ig3_smartcity_android.dataAccess.configuration.RetrofitConfigurationService;
 import com.example.ig3_smartcity_android.dataAccess.dto.JwtTokenPayloadDTO;
 import com.example.ig3_smartcity_android.model.JwtTokenPayload;
-import com.example.ig3_smartcity_android.model.MealToReceive;
+import com.example.ig3_smartcity_android.model.Meal;
+import com.example.ig3_smartcity_android.model.NetworkError;
 import com.example.ig3_smartcity_android.model.Order;
 import com.example.ig3_smartcity_android.model.User;
 import com.example.ig3_smartcity_android.services.mappers.TokenMapper;
@@ -43,7 +44,6 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -73,6 +73,11 @@ public class CartRecyclerViewFragment extends Fragment {
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         cartViewModel.getError().observe(getViewLifecycleOwner(), error -> {
             ApiError.showError(error, getContext());
+            if(error == NetworkError.NO_ERROR_DETECTED){
+                MainActivity.resetCart();
+                MealRecycleViewFragment mealRecycleViewFragment = new MealRecycleViewFragment();
+                goToFragmentX(mealRecycleViewFragment);
+            }
         });
 
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.sharedPref),Context.MODE_PRIVATE);
@@ -120,7 +125,7 @@ public class CartRecyclerViewFragment extends Fragment {
     //Adapter.
     private static class MealAdapter extends RecyclerView.Adapter<MealViewHolder>{
 
-        private ArrayList<MealToReceive> mealToReceives;
+        private ArrayList<Meal> meals;
         private Context context;
 
         public MealAdapter(Context context){
@@ -137,12 +142,12 @@ public class CartRecyclerViewFragment extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
-            MealToReceive mealToReceive = mealToReceives.get(position);
-            String name  = mealToReceive.getName();
-            String description = mealToReceive.getDescription();
-            String mealImage = mealToReceive.getImage();
+            Meal meal = meals.get(position);
+            String name  = meal.getName();
+            String description = meal.getDescription();
+            String mealImage = meal.getImage();
             Uri mealUri = Uri.parse(mealImage);
-            Integer portionNumber = mealToReceive.getPortion_number();
+            Integer portionNumber = meal.getPortion_number();
 
             holder.mealName.setText(name);
             holder.description.setText(description);
@@ -158,11 +163,11 @@ public class CartRecyclerViewFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mealToReceives == null ? 0: mealToReceives.size();
+            return meals == null ? 0: meals.size();
         }
 
-        public void setMeals(ArrayList<MealToReceive> mealToReceives){
-            this.mealToReceives = mealToReceives;
+        public void setMeals(ArrayList<Meal> meals){
+            this.meals = meals;
             notifyDataSetChanged();
         }
     }
@@ -176,7 +181,7 @@ public class CartRecyclerViewFragment extends Fragment {
             JwtTokenPayload jwtTokenPayload = TokenMapper.INSTANCE.mapToJwtTokenPayload(JwtTokenPayloadDTO);
 
             //meals
-            ArrayList<MealToReceive> meals = MainActivity.getMealsForCart();
+            ArrayList<Meal> meals = MainActivity.getMealsForCart();
             if(meals != null){
                 if(meals.size() > 0){
                     User userWhoPlaceOrder = new User(jwtTokenPayload.getId(),null,null,null,null,null,null,null,null);
@@ -185,9 +190,6 @@ public class CartRecyclerViewFragment extends Fragment {
                     String Orderjson = gson.toJson(order);
                     RequestBody body = RequestBody.create(MediaType.parse("application/json"), Orderjson);
                     cartViewModel.createOrder(body, token);
-                    MainActivity.resetCart();
-                    MealRecycleViewFragment mealRecycleViewFragment = new MealRecycleViewFragment();
-                    goToFragmentX(mealRecycleViewFragment);
                 }else{
                     Toast.makeText(getContext(),R.string.emptyCart,Toast.LENGTH_SHORT).show();
                 }
